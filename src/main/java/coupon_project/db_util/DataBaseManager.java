@@ -24,14 +24,14 @@ public class DataBaseManager {
 
     // SQL command for creating category table
     public static final String CREATE_CATEGORY_TABLE =
-            "CREATE TABLE IF NOT EXSIST 'coupon_project'.'category_table'(\n" +
+            "CREATE TABLE IF NOT EXISTS coupon_project.categories(\n" +
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`name` VARCHAR(45) NOT NULL,\n" +
                     "PRIMARY KEY (`id`));";
 
     // SQL command for creating company table
     public static final String CREATE_COMPANY_TABLE =
-            "CREATE TABLE IF NOT EXISTS 'coupon_project'.'company_table'(\n" +
+            "CREATE TABLE IF NOT EXISTS coupon_project.companies(\n" +
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`name` VARCHAR(45) NOT NULL,\n" +
                     "`email` VARCHAR(45) NOT NULL,\n" +
@@ -40,7 +40,7 @@ public class DataBaseManager {
 
     // SQL command for creating customer table
     public static final String CREATE_CUSTOMER_TABLE =
-            "CREATE TABLE IF NOT EXISTS 'coupon_project'.'customer_table'(\n" +
+            "CREATE TABLE IF NOT EXISTS coupon_project.customers(\n" +
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`first_name` VARCHAR(45) NOT NULL,\n" +
                     "`last_name` VARCHAR(45) NOT NULL,\n" +
@@ -50,7 +50,7 @@ public class DataBaseManager {
 
     // SQL command for creating coupons table
     public static final String CREATE_COUPONS_TABLE =
-            "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons`(\n" +
+            "CREATE TABLE IF NOT EXISTS coupon_project.coupons(\n" +
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`company_id` INT NOT NULL,\n" +
                     "`category_id` INT NOT NULL,\n" +
@@ -66,30 +66,30 @@ public class DataBaseManager {
                     "INDEX `category_id_idx` (`category_id` ASC) VISIBLE,\n" +
                     "CONSTRAINT `company_id`\n" +
                     "FOREIGN KEY (`company_id`)\n" +
-                    "REFERENCES `bhp-g1-coup-sys-p1`.`companies` (`id`)\n" +
+                    "REFERENCES coupon_project.companies (`id`)\n" +
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION,\n" +
                     "CONSTRAINT `category_id`\n" +
                     "FOREIGN KEY (`category_id`)\n" +
-                    "REFERENCES `bhp-g1-coup-sys-p1`.`categories` (`id`)\n" +
+                    "REFERENCES coupon_project.categories (`id`)\n" +
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION)\n";
 
     // SQL command for creating "Coupon VS Customers" table
     public static final String CREATE_COUPONS_CUSTOMER_TABLE =
-            "CREATE TABLE IF NOT EXISTS 'coupon_project'.'coupon_customers'(\n" +
+            "CREATE TABLE IF NOT EXISTS coupon_project.coupon_customers(\n" +
                     "`customer_id` INT NOT NULL,\n" +
                     "`coupon_id` INT NOT NULL,\n" +
                     "PRIMARY KEY (`customer_id`, `coupon_id`),\n" +
                     "INDEX `coupon_id_idx` (`coupon_id` ASC) VISIBLE,\n" +
                     "CONSTRAINT `customer_id`\n" +
                     "FOREIGN KEY (`customer_id`)\n" +
-                    "REFERENCES `bhp-g1-coup-sys-p1`.`customers` (`id`)\n" +
+                    "REFERENCES coupon_project.customers (`id`)\n" +
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION,\n" +
                     "CONSTRAINT `coupon_id`\n" +
                     "FOREIGN KEY (`coupon_id`)\n" +
-                    "REFERENCES `bhp-g1-coup-sys-p1`.`coupons` (`id`)\n" +
+                    "REFERENCES coupon_project.`coupons` (`id`)\n" +
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION)";
 
@@ -168,6 +168,7 @@ public class DataBaseManager {
         createDataBase();
         createCompanyTable();
         createCustomerTable();
+        createCategoryTable();
         createCouponTable();
         createCouponVSCustomerTable();
     }

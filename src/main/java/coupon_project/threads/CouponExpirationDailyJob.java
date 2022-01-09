@@ -3,33 +3,24 @@ package coupon_project.threads;
 import coupon_project.beans.Coupon;
 import coupon_project.beans.Customer;
 import coupon_project.dao.CouponsDAO;
-import coupon_project.db_dao.CouponsDBDAO;
 import coupon_project.db_util.Factory;
-
-import java.lang.reflect.Type;
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * this is a daily job that erases all coupons which had their expiration date surpass the current date.
  */
-public class CouponExpirationDailyJob implements Runnable  {
+public class CouponExpirationDailyJob implements Runnable {
     //todo: activate the thread at the beginning of the program, terminate at the end!!!!
-    private String DB;
     private boolean quit = false;
     private final CouponsDAO couponsDAO;
 
-    @Override
     /**
      * if run quits legally when finished, and quit is true
      * if run quits illegally, quit will stay false.
      * thread waits until woken by another util thread that keeps tabs on the time.
      */
-    public void run()  {
-        while(!quit){
+    @Override
+    public void run() {
+        while (!quit) {
             try {
                 for (Coupon coupon : couponsDAO.getAllCoupons())
                     if (GregorianCalendar.getInstance().getTime().before(coupon.getEndDate())) {
@@ -38,9 +29,8 @@ public class CouponExpirationDailyJob implements Runnable  {
                         }
                         this.couponsDAO.deleteCoupon(coupon.getId());
                     }
-                Thread.sleep(60*1000*60*24);
-            }
-            catch (Exception Exception){
+                Thread.sleep(60 * 1000 * 60 * 24);
+            } catch (Exception Exception) {
                 break;
             }
 
@@ -50,7 +40,7 @@ public class CouponExpirationDailyJob implements Runnable  {
     /**
      * calling this function will terminate the thread legally.
      */
-    public void stop(){
+    public void stop() {
         this.quit = true;
     }
 

@@ -7,8 +7,6 @@ import coupon_project.db_dao.CompaniesDBDAO;
 import coupon_project.db_dao.CouponsDBDAO;
 import coupon_project.db_dao.CustomersDBDAO;
 
-import java.lang.reflect.Type;
-
 public class Factory {
 
     public static CouponsDAO getCouponDAO(String DB){

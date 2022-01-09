@@ -3,23 +3,15 @@ package coupon_project.facade;
 import coupon_project.beans.Category;
 import coupon_project.beans.Company;
 import coupon_project.beans.Coupon;
-import coupon_project.dao.CompaniesDAO;
-import coupon_project.dao.CouponsDAO;
-import coupon_project.db_dao.CompaniesDBDAO;
-import coupon_project.db_dao.CouponsDBDAO;
-import coupon_project.db_util.Factory;
+import coupon_project.exceptions.CompanyException;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CompanyFacade extends ClientFacade {
     private int companyID;
-    private CompaniesDAO companyActions;
-    private CouponsDAO couponActions;
 
     public CompanyFacade() {
-        this.companyActions = Factory.getCompanyDAO("sql");;
-        this.couponActions = Factory.getCouponDAO("sql");;
     }
 
     @Override
@@ -31,7 +23,10 @@ public class CompanyFacade extends ClientFacade {
         return false;
     }
 
-    void addCoupon(Coupon coupon) throws SQLException, InterruptedException {
+    void addCoupon(Coupon coupon) throws SQLException, InterruptedException, CompanyException {
+        if (couponActions.isCouponExistsByNameForCompany(coupon.getTitle(), companyID)) {
+            throw new CompanyException("Coupon name already exists for your company");
+        }
         couponActions.addCoupon(coupon);
     }
 
@@ -41,6 +36,7 @@ public class CompanyFacade extends ClientFacade {
 
     void deleteCoupon(int couponID) throws SQLException, InterruptedException {
         couponActions.deleteCoupon(couponID);
+        purchaseActions.deleteAllPurchasesByCoupon(couponID);
     }
 
     ArrayList<Coupon> getCompanyCoupons() throws SQLException, InterruptedException {

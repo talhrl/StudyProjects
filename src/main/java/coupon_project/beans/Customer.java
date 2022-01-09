@@ -1,6 +1,5 @@
 package coupon_project.beans;
 
-import javax.crypto.Cipher;
 import java.util.ArrayList;
 
 public class Customer {
@@ -149,4 +148,15 @@ public class Customer {
         this.coupons = coupons;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", coupons=" + coupons +
+                '}';
+    }
 }

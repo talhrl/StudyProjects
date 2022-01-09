@@ -8,5 +8,5 @@ public enum Category {
     Electricity,
     Restaurant,
     Vacation,
-    Fashion;
+    Fashion
 }

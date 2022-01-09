@@ -16,9 +16,7 @@ public class Tester {
             System.out.println("User logged successfully");
         } catch (LoginException e) {
             System.out.println(e.getMessage());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
         }
 

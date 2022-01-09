@@ -25,7 +25,7 @@ public class Coupon {
     private String image;
 
     /**
-     * Constructor for coupon istance
+     * Constructor for coupon instance
      *
      * @param id          Coupon ID
      * @param companyID   Company ID
@@ -235,5 +235,21 @@ public class Coupon {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return "Coupon{" +
+                "id=" + id +
+                ", companyID=" + companyID +
+                ", category=" + category +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", amount=" + amount +
+                ", price=" + price +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

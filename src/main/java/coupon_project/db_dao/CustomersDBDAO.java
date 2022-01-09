@@ -3,6 +3,7 @@ package coupon_project.db_dao;
 import coupon_project.beans.Customer;
 import coupon_project.dao.CustomersDAO;
 import coupon_project.db_util.DatabaseUtils;
+import coupon_project.db_util.Factory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,6 +77,7 @@ public class CustomersDBDAO implements CustomersDAO {
             customer.setFirstName(resultSet.getString("first_name"));
             customer.setLastName(resultSet.getString("last_name"));
             customer.setPassword(resultSet.getString("password"));
+            customer.setCoupons(Factory.getCustomerVsCouponDAO("sql").getAllCustomerCoupons(resultSet.getInt("id")));
             customerList.add(customer);
         }
         return customerList;
@@ -94,6 +96,7 @@ public class CustomersDBDAO implements CustomersDAO {
         customer.setFirstName(resultSet.getString("first_name"));
         customer.setLastName(resultSet.getString("last_name"));
         customer.setPassword(resultSet.getString("password"));
+        customer.setCoupons(Factory.getCustomerVsCouponDAO("sql").getAllCustomerCoupons(resultSet.getInt("id")));
         return customer;
     }
 
@@ -117,5 +120,16 @@ public class CustomersDBDAO implements CustomersDAO {
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         return resultSet.getInt("id");
+    }
+
+    @Override
+    public boolean isCustomerExistsByEmail(String email) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, email);
+        String CHECK_CUSTOMER = "SELECT COUNT(*) AS total" +
+                "FROM `coupon_project`.`customer_table`" +
+                "WHERE email=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        return resultSet.getInt("total") > 0;
     }
 }

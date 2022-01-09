@@ -86,7 +86,7 @@ public class Company {
     /**
      * Get function for company ID
      *
-     * @return Comapny ID
+     * @return Company ID
      */
     public int getId() {
         return id;
@@ -126,6 +126,16 @@ public class Company {
      */
     public ArrayList<Coupon> getCoupons() {
         return coupons;
+    }
+
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", coupons=" + coupons +
+                '}';
     }
 }
 

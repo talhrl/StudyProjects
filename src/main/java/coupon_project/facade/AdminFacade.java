@@ -1,17 +1,11 @@
 package coupon_project.facade;
 
 import coupon_project.beans.Company;
+import coupon_project.beans.Coupon;
 import coupon_project.beans.Customer;
-import coupon_project.dao.CompaniesDAO;
-import coupon_project.dao.CouponsDAO;
-import coupon_project.dao.CustomersDAO;
-import coupon_project.db_dao.CompaniesDBDAO;
-import coupon_project.db_dao.CouponsDBDAO;
-import coupon_project.db_dao.CustomersDBDAO;
-import coupon_project.db_util.Factory;
+import coupon_project.exceptions.AdministrationException;
 
 import java.sql.SQLException;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class AdminFacade extends ClientFacade {
@@ -20,24 +14,26 @@ public class AdminFacade extends ClientFacade {
 
     private final String ADMIN_PASSWORD = "admin";
 
-    private CompaniesDAO companyActions;
-    private CustomersDAO customerActions;
-    private CouponsDAO couponActions;
-
     public AdminFacade() {
-        this.companyActions = Factory.getCompanyDAO("sql");
-        this.customerActions = Factory.getCustomerDAO("sql");
-        this.couponActions = Factory.getCouponDAO("sql");
     }
 
     public boolean login(String email, String password) {
-        if (email.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
-            return true;
-        }
-        return false;
+        return email.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD);
     }
 
-    public void addCompany(Company company) throws SQLException, InterruptedException {
+    /** adds new company to the database.
+     * @param company A company object.
+     * @throws SQLException            when sql raises an exception.
+     * @throws InterruptedException    when thread is interrupted.
+     * @throws AdministrationException when email or company name already exist.
+     */
+    public void addCompany(Company company) throws SQLException, InterruptedException, AdministrationException {
+        if (companyActions.isCompanyExistsByName(company.getName())) {
+            throw new AdministrationException("Company name already exists");
+        }
+        if (companyActions.isCompanyExistsByEmail(company.getEmail())) {
+            throw new AdministrationException("Company email already exists");
+        }
         companyActions.addCompany(company);
     }
 
@@ -46,7 +42,12 @@ public class AdminFacade extends ClientFacade {
     }
 
     public void deleteCompany(int companyID) throws SQLException, InterruptedException {
+        ArrayList<Coupon> couponArrayList = couponActions.getAllCompanyCoupons(companyID);
+        for (Coupon coupon : couponArrayList) {
+            purchaseActions.deleteAllPurchasesByCoupon(coupon.getId());
+        }
         companyActions.deleteCompany(companyID);
+        couponActions.deleteAllCompanyCoupons(companyID);
     }
 
     public ArrayList<Company> getAllCompanies() throws SQLException, InterruptedException {
@@ -57,7 +58,10 @@ public class AdminFacade extends ClientFacade {
         return companyActions.getOneCompany(companyID);
     }
 
-    public void addCustomer(Customer customer) throws SQLException, InterruptedException {
+    public void addCustomer(Customer customer) throws SQLException, InterruptedException, AdministrationException {
+        if (customerActions.isCustomerExistsByEmail(customer.getEmail())) {
+            throw new AdministrationException("Customer email already exists");
+        }
         customerActions.addCustomer(customer);
     }
 
@@ -67,6 +71,7 @@ public class AdminFacade extends ClientFacade {
 
     public void deleteCustomer(int customerID) throws SQLException, InterruptedException {
         customerActions.deleteCustomer(customerID);
+        purchaseActions.deleteAllPurchasesByCustomer(customerID);
     }
 
     public ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException {

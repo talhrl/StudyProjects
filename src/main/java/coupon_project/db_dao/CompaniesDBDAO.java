@@ -2,8 +2,8 @@ package coupon_project.db_dao;
 
 import coupon_project.beans.Company;
 import coupon_project.dao.CompaniesDAO;
-import coupon_project.db_util.ConnectionPool;
 import coupon_project.db_util.DatabaseUtils;
+import coupon_project.db_util.Factory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,16 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CompaniesDBDAO implements CompaniesDAO {
-    private ConnectionPool connectionPool;
 
-    /**
-     * A method that receives an email and a password and checks whether the company exists
-     * @param email company email
-     * @param password company password
-     * @return Does the company exist
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public boolean isCompanyExists(String email, String password) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -34,12 +26,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         return resultSet.getInt("total") > 0;
     }
 
-    /**
-     *A method that adds a new company
-     * @param company Company data
-     * @throws SQLException If this company already exists in the system, it can not be added again
-     * @throws InterruptedException
-     */
+
     @Override
     public void addCompany(Company company) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -54,9 +41,10 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
     /**
-     *Updating the company's data, only the company's email and / or password can be updated
+     * Updating the company's data, only the company's email and / or password can be updated
+     *
      * @param company company data
-     * @throws SQLException If the company does not exist
+     * @throws SQLException         If the company does not exist
      * @throws InterruptedException
      */
     @Override
@@ -71,12 +59,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
         DatabaseUtils.runQueryForResult(UPDATE_COMPANY, params);
     }
 
-    /**
-     * Method of delivering a company out of the system
-     * @param companyId The ID number of the company you want to delete
-     * @throws SQLException If there is no company with this ID number
-     * @throws InterruptedException
-     */
     @Override
     public void deleteCompany(int companyId) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -87,12 +69,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         DatabaseUtils.runQueryForResult(CHECK_COMPANY, params);
     }
 
-    /**
-     * A method that returns a list of all companies
-     * @return list of all companies
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public ArrayList<Company> getAllCompany() throws SQLException, InterruptedException {
         String GET_COMPANIES = "SELECT *" +
@@ -105,18 +82,13 @@ public class CompaniesDBDAO implements CompaniesDAO {
             company.setId(resultSet.getInt("id"));
             company.setName(resultSet.getString("name"));
             company.setPassword(resultSet.getString("password"));
+            company.setCoupons(Factory.getCouponDAO("sql").getAllCompanyCoupons(resultSet.getInt("id")));
             companyList.add(company);
         }
         return companyList;
     }
 
-    /**
-     *A method that returns the company's data according to ID number
-     * @param companyId the id company
-     * @return company data
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public Company getOneCompany(int companyId) throws SQLException, InterruptedException {
         Company company = new Company();
@@ -129,16 +101,11 @@ public class CompaniesDBDAO implements CompaniesDAO {
         company.setPassword(resultSet.getString("password"));
         company.setEmail(resultSet.getString("email"));
         company.setName(resultSet.getString("name"));
+        company.setCoupons(Factory.getCouponDAO("sql").getAllCompanyCoupons(resultSet.getInt("id")));
         return company;
     }
 
-    /**
-     *A method that returns the company's ID number according to email address
-     * @param email company email
-     * @return id number
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public int getCompanyIDbyEmail(String email) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -147,5 +114,27 @@ public class CompaniesDBDAO implements CompaniesDAO {
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         return resultSet.getInt("id");
+    }
+
+    @Override
+    public boolean isCompanyExistsByName(String name) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, name);
+        String CHECK_COMPANY_BY_NAME = "SELECT COUNT(*) AS total" +
+                "FROM `coupon_project`.`company_table`" +
+                "WHERE name=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COMPANY_BY_NAME, params);
+        return resultSet.getInt("total") > 0;
+    }
+
+    @Override
+    public boolean isCompanyExistsByEmail(String email) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, email);
+        String CHECK_COMPANY_BY_EMAIL = "SELECT COUNT(*) AS total" +
+                "FROM `coupon_project`.`company_table`" +
+                "WHERE email=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COMPANY_BY_EMAIL, params);
+        return resultSet.getInt("total") > 0;
     }
 }

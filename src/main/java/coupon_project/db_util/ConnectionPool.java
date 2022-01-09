@@ -10,7 +10,7 @@ public class ConnectionPool {
     // Getting the max number of connection
     private static final int NUM_OF_CONS = DataBaseManager.MAX_CONNECTION;
     // Initializing the instance for null at the beginning
-    private static ConnectionPool instance = null;
+    private static volatile ConnectionPool instance = null;
     // Initializing the connections stack at the beginning
     private final Stack<Connection> connections = new Stack<>();
 
@@ -39,8 +39,8 @@ public class ConnectionPool {
                 if (instance == null) {
                     try {
                         instance = new ConnectionPool();
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                    } catch (SQLException throwable) {
+                        throwable.printStackTrace();
                     }
                 }
             }

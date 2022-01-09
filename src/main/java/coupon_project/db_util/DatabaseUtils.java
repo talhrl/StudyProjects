@@ -17,10 +17,9 @@ public class DatabaseUtils {
      * Function for run a command on mySQL
      *
      * @param query Command (mySQL language)
-     * @throws SQLException
      * @throws InterruptedException
      */
-    public static void runQuery(String query) throws SQLException, InterruptedException {
+    public static void runQuery(String query) throws InterruptedException {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -37,10 +36,9 @@ public class DatabaseUtils {
      *
      * @param query  Command (mySQL language)
      * @param params Parameters to replace "?"
-     * @throws SQLException
      * @throws InterruptedException
      */
-    public static void runQuery(String query, Map<Integer, Object> params) throws SQLException, InterruptedException {
+    public static void runQuery(String query, Map<Integer, Object> params) throws InterruptedException {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -77,10 +75,9 @@ public class DatabaseUtils {
      *
      * @param query Command (mySQL language)
      * @return Wanted data
-     * @throws SQLException
      * @throws InterruptedException
      */
-    public static Resultset runQueryForResult(String query) throws SQLException, InterruptedException {
+    public static Resultset runQueryForResult(String query) throws InterruptedException {
         Resultset resultset = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -100,10 +97,9 @@ public class DatabaseUtils {
      * @param query  Command (mySQL language)
      * @param params Parameters to replace "?"
      * @return Wanted data
-     * @throws SQLException
      * @throws InterruptedException
      */
-    public static Resultset runQueryForResult(String query, Map<Integer, Object> params) throws SQLException, InterruptedException {
+    public static Resultset runQueryForResult(String query, Map<Integer, Object> params) throws InterruptedException {
         Resultset resultset = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();

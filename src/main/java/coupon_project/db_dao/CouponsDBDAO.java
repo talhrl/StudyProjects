@@ -1,28 +1,20 @@
 package coupon_project.db_dao;
 
 import coupon_project.beans.Category;
-import coupon_project.beans.Company;
 import coupon_project.beans.Coupon;
 import coupon_project.beans.Customer;
 import coupon_project.dao.CouponsDAO;
-import coupon_project.db_util.ConnectionPool;
 import coupon_project.db_util.DatabaseUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CouponsDBDAO implements CouponsDAO {
-    private ConnectionPool connectionPool;
 
-    /**
-     * A method that adds a new coupon to the system
-     * @param coupon coupon data
-     * @throws SQLException
-     * @throws InterruptedException
-     */
     @Override
     public void addCoupon(Coupon coupon) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -42,12 +34,7 @@ public class CouponsDBDAO implements CouponsDAO {
         DatabaseUtils.runQueryForResult(ADD_COUPON, params);
     }
 
-    /**
-     * A method that updates existing coupon data
-     * @param coupon coupon data
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -66,12 +53,7 @@ public class CouponsDBDAO implements CouponsDAO {
         DatabaseUtils.runQueryForResult(UPDATE_COUPON, params);
     }
 
-    /**
-     * Method that deletes a coupon by ID number
-     * @param couponID id number
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public void deleteCoupon(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -82,12 +64,7 @@ public class CouponsDBDAO implements CouponsDAO {
         DatabaseUtils.runQueryForResult(DELETE_COUPON, params);
     }
 
-    /**
-     * A method that returns the list of all coupons in the system
-     * @return list of all coupons in the system
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public ArrayList<Coupon> getAllCoupons() throws SQLException, InterruptedException {
         String GET_COUPON = "SELECT *" +
@@ -111,13 +88,7 @@ public class CouponsDBDAO implements CouponsDAO {
         return couponsList;
     }
 
-    /**
-     * Receiving data of a single coupon from the system according to the coupon ID number
-     * @param couponID coupon id
-     * @return coupon data
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public Coupon getOneCoupon(int couponID) throws SQLException, InterruptedException {
         Coupon coupon = new Coupon();
@@ -139,13 +110,7 @@ public class CouponsDBDAO implements CouponsDAO {
         return coupon;
     }
 
-    /**
-     * A method that checks whether a particular coupon remains
-     * @param couponID coupon id
-     * @return whether a particular coupon remains
-     * @throws SQLException
-     * @throws InterruptedException
-     */
+
     @Override
     public boolean isCouponLeft(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -237,19 +202,11 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     @Override
-    public void addCouponPurchase(int customerID, int couponID) throws SQLException, InterruptedException {
+    public void decreaseCouponAmount(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, couponID);
         String REDUCE_COUPON_AMOUNT = "SET amount = amount-1 WHERE id=?";
-        DatabaseUtils.runQueryForResult(REDUCE_COUPON_AMOUNT, params);
-
-        Map<Integer, Object> params2 = new HashMap<>();
-        params2.put(1, couponID);
-        params2.put(2, customerID);
-        String ADD_COUPON = "INSERT INTO 'coupon_project'.'coupon_customers' " +
-                "(`coupon_id`,`customer_id`)" +
-                "VALUES (?,?)";
-        DatabaseUtils.runQueryForResult(ADD_COUPON, params2);
+        DatabaseUtils.runQuery(REDUCE_COUPON_AMOUNT, params);
     }
 
     @Override
@@ -261,22 +218,6 @@ public class CouponsDBDAO implements CouponsDAO {
                 "FROM `coupon_project`.`coupon_customers`" +
                 "WHERE customer_id=? AND coupon_id=?";
         DatabaseUtils.runQueryForResult(DELETE_COUPON_FOR_CUSTOMER, params);
-    }
-
-    @Override
-    public ArrayList<Coupon> getAllCustomerCoupons(int customerID) throws SQLException, InterruptedException {
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerID);
-        String GET_COUPON = "SELECT coupon_id" +
-                "FROM `coupon.project`.`coupon_customers`" +
-                "WHERE customer_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON, params);
-        ArrayList<Coupon> couponsList = new ArrayList<>();
-        while (resultSet.next()) {
-            Coupon coupon = getOneCoupon(resultSet.getInt("coupon_id"));
-            couponsList.add(coupon);
-        }
-        return couponsList;
     }
 
     @Override
@@ -297,39 +238,30 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     @Override
-    public ArrayList<Coupon> getCustomerCouponsByCategory(int customerID, Category category) throws SQLException, InterruptedException {
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerID);
-        String GET_COUPON = "SELECT coupon_id" +
-                "FROM `coupon.project`.`coupon_customers`" +
-                "WHERE customer_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON, params);
-        ArrayList<Coupon> couponsList = new ArrayList<>();
-        while (resultSet.next()) {
-            Coupon coupon = getOneCoupon(resultSet.getInt("coupon_id"));
-            if (coupon.getCategory() == category) {
-                couponsList.add(coupon);
-            }
-        }
-        return couponsList;
+    public boolean isCouponValid(int couponID) throws SQLException, InterruptedException {
+        Coupon coupon = getOneCoupon(couponID);
+        return coupon.getEndDate().after(GregorianCalendar.getInstance().getTime());
     }
 
     @Override
-    public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(int customerID, double maxPrice) throws SQLException, InterruptedException {
+    public void deleteAllCompanyCoupons(int companyID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerID);
-        String GET_COUPON = "SELECT coupon_id" +
-                "FROM `coupon.project`.`coupon_customers`" +
-                "WHERE customer_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON, params);
-        ArrayList<Coupon> couponsList = new ArrayList<>();
-        while (resultSet.next()) {
-            Coupon coupon = getOneCoupon(resultSet.getInt("coupon_id"));
-            if (coupon.getPrice() <= maxPrice) {
-                couponsList.add(coupon);
-            }
-        }
+        params.put(1, companyID);
+        String DELETE_COUPON_BY_COMPANY = "DELETE *" +
+                "FROM `coupon.project`.`coupons`" +
+                "WHERE company_id=?";
+        DatabaseUtils.runQuery(DELETE_COUPON_BY_COMPANY, params);
+    }
 
-        return couponsList;
+    @Override
+    public boolean isCouponExistsByNameForCompany(String name, int companyID) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, companyID);
+        params.put(2, name);
+        String CHECK_FOR_COUPON_BY_NAME = "SELECT COUNT(*) as total" +
+                "FROM `coupon.project`.`coupons`" +
+                "WHERE company_id=? AND title=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_FOR_COUPON_BY_NAME, params);
+        return resultSet.getInt("total") > 0;
     }
 }
