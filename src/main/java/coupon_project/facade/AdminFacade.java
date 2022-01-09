@@ -2,49 +2,67 @@ package coupon_project.facade;
 
 import coupon_project.beans.Company;
 import coupon_project.beans.Customer;
+import coupon_project.dao.CompaniesDAO;
+import coupon_project.dao.CouponsDAO;
+import coupon_project.dao.CustomersDAO;
+import coupon_project.db_dao.CompaniesDBDAO;
+import coupon_project.db_dao.CouponsDBDAO;
+import coupon_project.db_dao.CustomersDBDAO;
+import coupon_project.db_util.Factory;
 
+import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class AdminFacade extends ClientFacade {
 
+    private final String ADMIN_USERNAME = "admin@admin.com";
+
+    private final String ADMIN_PASSWORD = "admin";
+
+    private CompaniesDAO companyActions;
+    private CustomersDAO customerActions;
+    private CouponsDAO couponActions;
+
     public AdminFacade() {
-        //todo : finish constructor of adminFacade
+        this.companyActions = Factory.getCompanyDAO("sql");
+        this.customerActions = Factory.getCustomerDAO("sql");
+        this.couponActions = Factory.getCouponDAO("sql");
     }
 
     public boolean login(String email, String password) {
-        //todo : finish login of adminFacade
+        if (email.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
+            return true;
+        }
         return false;
     }
 
-    public void addCompany(Company company){
-        //todo : finish addCompany of adminFacade
+    public void addCompany(Company company) throws SQLException, InterruptedException {
+        companyActions.addCompany(company);
     }
 
-    public void updateCompany(Company company){
-        //todo : finish updateCompany of adminFacade
+    public void updateCompany(Company company) throws SQLException, InterruptedException {
+        companyActions.updateCompany(company);
     }
 
     public void deleteCompany(int CompanyID) {
         //todo : finish deleteCompany of adminFacade
     }
 
-    public ArrayList<Company> getAllCompanies() {
-        //todo : finish getAllCompanies of adminFacade
-        return new ArrayList<>();
+    public ArrayList<Company> getAllCompanies() throws SQLException, InterruptedException {
+        return companyActions.getAllCompany();
     }
 
-    public Company getOneCompany(int companyID) {
-        //todo : finish getOneCompany of adminFacade
-        return new Company();
+    public Company getOneCompany(int companyID) throws SQLException, InterruptedException {
+        return companyActions.getOneCompany(companyID);
     }
 
-    public void addCustomer(Customer customer) {
-        //todo : finish addCustomer of adminFacade
+    public void addCustomer(Customer customer) throws SQLException, InterruptedException {
+        customerActions.addCustomer(customer);
     }
 
-    public void updateCustomer(Customer customer) {
-        //todo : finish updateCustomer of adminFacade
+    public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
+        customerActions.updateCustomer(customer);
     }
 
     public void deleteCustomer(int customerID) {

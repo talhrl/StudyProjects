@@ -2,19 +2,26 @@ package coupon_project.db_dao;
 
 import coupon_project.beans.Customer;
 import coupon_project.dao.CustomersDAO;
-import coupon_project.db_util.ConnectionPool;
+import coupon_project.db_util.DatabaseUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomersDBDAO implements CustomersDAO {
-    private ConnectionPool connectionPool;
 
     @Override
-    public boolean isCustomerExists(String email, String password) {
-
-
-        // TODO: isCustomerExists
-        return false;
+    public boolean isCustomerExists(String email, String password) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, email);
+        params.put(2, password);
+        String CHECK_CUSTOMER = "SELECT COUNT(*) AS total" +
+                "FROM `coupon_project`.`customer_table`" +
+                "WHERE email=? AND password=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        return resultSet.getInt("total") > 0;
     }
 
     @Override
@@ -23,8 +30,17 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
-        // TODO: updateCustomer
+    public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customer.getFirstName());
+        params.put(2, customer.getLastName());
+        params.put(3, customer.getEmail());
+        params.put(4, customer.getPassword());
+        params.put(5, customer.getId());
+        String UPDATE_CUSTOMER = "UPDATE `coupon_project`.`customer_table` " +
+                "SET first_name=?, last_name=?, email=?, password=? " +
+                "WHERE id=?";
+        DatabaseUtils.runQueryForResult(UPDATE_CUSTOMER, params);
     }
 
     @Override
@@ -33,14 +49,58 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public ArrayList<Customer> getAllCustomers() {
-        // TODO: getAllCustomers
-        return null;
+    public ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException {
+        String GET_CUSTOMERS = "SELECT *" +
+                "FROM `coupon.project`.`customer_table`";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMERS);
+        ArrayList<Customer> customerList = new ArrayList<>();
+        while (resultSet.next()) {
+            Customer customer = new Customer();
+            customer.setEmail(resultSet.getString("email"));
+            customer.setId(resultSet.getInt("id"));
+            customer.setFirstName(resultSet.getString("first_name"));
+            customer.setLastName(resultSet.getString("last_name"));
+            customer.setPassword(resultSet.getString("password"));
+            customerList.add(customer);
+        }
+        return customerList;
     }
 
     @Override
-    public Customer getOneCustomer(int customerID) {
-        // TODO: getOneCustomer
-        return null;
+    public Customer getOneCustomer(int customerID) throws SQLException, InterruptedException {
+        Customer customer = new Customer();
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerID);
+        String GET_CUSTOMER = "SELECT (*) FROM `coupon_project`.`customer_table`" +
+                "WHERE id=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
+        customer.setEmail(resultSet.getString("email"));
+        customer.setId(resultSet.getInt("id"));
+        customer.setFirstName(resultSet.getString("first_name"));
+        customer.setLastName(resultSet.getString("last_name"));
+        customer.setPassword(resultSet.getString("password"));
+        return customer;
+    }
+
+    @Override
+    public boolean isCustomerHaveCoupon(int customerID, int couponID) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerID);
+        params.put(2, couponID);
+        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total" +
+                "FROM `coupon_project`.`coupon_customers`" +
+                "WHERE customer_id=? AND coupon_id=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
+        return resultSet.getInt("total") > 0;
+    }
+
+    @Override
+    public int getCustomerIDbyEmail(String email) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, email);
+        String GET_COMPANY = "SELECT id FROM `coupon_project`.`coupon_customers`" +
+                "WHERE email=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
+        return resultSet.getInt("id");
     }
 }

@@ -1,6 +1,6 @@
 package coupon_project.exceptions;
 
-public class LoginException extends Exception{
+public class LoginException extends Exception {
     public LoginException() {
         super("General Error");
     }

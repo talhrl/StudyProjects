@@ -50,7 +50,7 @@ public class DataBaseManager {
 
     // SQL command for creating coupons table
     public static final String CREATE_COUPONS_TABLE =
-            "CREATE TABLE `coupon_project`.`coupons`(\n" +
+            "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons`(\n" +
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`company_id` INT NOT NULL,\n" +
                     "`category_id` INT NOT NULL,\n" +
@@ -77,7 +77,7 @@ public class DataBaseManager {
 
     // SQL command for creating "Coupon VS Customers" table
     public static final String CREATE_COUPONS_CUSTOMER_TABLE =
-            "CREATE TABLE IF NOT EXISTS 'coupon_project'.'Coupon_Customers'(\n" +
+            "CREATE TABLE IF NOT EXISTS 'coupon_project'.'coupon_customers'(\n" +
                     "`customer_id` INT NOT NULL,\n" +
                     "`coupon_id` INT NOT NULL,\n" +
                     "PRIMARY KEY (`customer_id`, `coupon_id`),\n" +
@@ -97,8 +97,8 @@ public class DataBaseManager {
     /**
      * A function for creating database "coupon_project"
      *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void createDataBase() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_DB);
@@ -107,8 +107,8 @@ public class DataBaseManager {
     /**
      * A function for deleting database "coupon_project"
      *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void dropDataBase() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_DB);
@@ -121,8 +121,8 @@ public class DataBaseManager {
     /**
      * A function for creating company table
      *
-     * @throws SQLException         //todo : describe InterruptedException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void createCompanyTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COMPANY_TABLE);
@@ -131,8 +131,8 @@ public class DataBaseManager {
     /**
      * A function for creating customer table
      *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void createCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_CUSTOMER_TABLE);
@@ -141,33 +141,34 @@ public class DataBaseManager {
     /**
      * A function for creating coupon table
      *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void createCouponTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COUPONS_TABLE);
     }
 
     /**
+     * A function for creating Coupon VS Customer table
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void createCouponVSCustomerTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(CREATE_COUPONS_CUSTOMER_TABLE);
+    }
+
+    /**
      * A function for creating the whole project (database, company table, customer table and coupon table)
      *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
+     * @throws SQLException
+     * @throws InterruptedException
      */
     public static void createCouponsProjectDB() throws SQLException, InterruptedException {
         createDataBase();
         createCompanyTable();
         createCustomerTable();
         createCouponTable();
-    }
-
-    /**
-     * A function for creating Coupon VS Customer table
-     *
-     * @throws SQLException         //todo : describe SQLException
-     * @throws InterruptedException //todo : describe InterruptedException
-     */
-    public static void createCouponVSCustomerTable() throws SQLException, InterruptedException {
-        DatabaseUtils.runQuery(CREATE_COUPONS_CUSTOMER_TABLE);
+        createCouponVSCustomerTable();
     }
 }
