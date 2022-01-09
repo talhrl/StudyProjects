@@ -6,17 +6,48 @@ import coupon_project.beans.Coupon;
 import coupon_project.beans.Customer;
 import coupon_project.dao.CouponsDAO;
 import coupon_project.db_util.ConnectionPool;
+import coupon_project.db_util.DatabaseUtils;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CouponsDBDAO implements CouponsDAO {
     private ConnectionPool connectionPool;
 
+    /**
+     * A method that adds a new coupon to the system
+     * @param coupon coupon data
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     @Override
-    public void addCoupon(Coupon coupon) {
-// TODO: add coupon
+    public void addCoupon(Coupon coupon) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, coupon.getId());
+        params.put(2, coupon.getAmount());
+        params.put(3, coupon.getCategory());
+        params.put(4, coupon.getCompanyID());
+        params.put(5, coupon.getDescription());
+        params.put(6, coupon.getStartDate());
+        params.put(7, coupon.getEndDate());
+        params.put(8, coupon.getTitle());
+        params.put(9, coupon.getImage());
+        params.put(10, coupon.getPrice());
+        String ADD_COUPON = "INSERT INTO `coupon_project`.`coupons` " +
+                "(`id`,`amount`,`category`,`company_id`, `description`, `start_date`, `end_date`, `title`, `image`, `price`)" +
+                "VALUES (?,?,?,?,?,?,?,?,?,?)";
+        DatabaseUtils.runQueryForResult(ADD_COUPON, params);
     }
 
+    /**
+     * A method that updates existing coupon data
+     * @param coupon coupon data
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     @Override
     public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
@@ -51,6 +82,12 @@ public class CouponsDBDAO implements CouponsDAO {
         DatabaseUtils.runQueryForResult(DELETE_COUPON, params);
     }
 
+    /**
+     * A method that returns the list of all coupons in the system
+     * @return list of all coupons in the system
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     @Override
     public ArrayList<Coupon> getAllCoupons() throws SQLException, InterruptedException {
         String GET_COUPON = "SELECT *" +
@@ -74,6 +111,13 @@ public class CouponsDBDAO implements CouponsDAO {
         return couponsList;
     }
 
+    /**
+     * Receiving data of a single coupon from the system according to the coupon ID number
+     * @param couponID coupon id
+     * @return coupon data
+     * @throws SQLException
+     * @throws InterruptedException
+     */
     @Override
     public Coupon getOneCoupon(int couponID) throws SQLException, InterruptedException {
         Coupon coupon = new Coupon();

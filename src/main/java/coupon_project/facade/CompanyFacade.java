@@ -35,8 +35,8 @@ public class CompanyFacade extends ClientFacade {
         couponActions.addCoupon(coupon);
     }
 
-    void updateCoupon(Coupon coupon) {
-        //todo : finish updateCoupon of companyFacade
+    void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
+        couponActions.updateCoupon(coupon);
     }
 
     void deleteCoupon(int couponID) throws SQLException, InterruptedException {
@@ -51,9 +51,8 @@ public class CompanyFacade extends ClientFacade {
         return couponActions.getCompanyCouponsByCategory(this.companyID, category);
     }
 
-    ArrayList<Coupon> getCompanyCouponsTillMaxPrice(double maxPrice) {
-        //todo : finish getCompanyCouponsTillMaxPrice of companyFacade
-        return new ArrayList<>();
+    ArrayList<Coupon> getCompanyCouponsTillMaxPrice(double maxPrice) throws SQLException, InterruptedException {
+        return couponActions.getCompanyCouponsTillMaxPrice(this.companyID, maxPrice);
     }
 
     public Company getCompanyDetails() throws SQLException, InterruptedException {

@@ -29,8 +29,14 @@ public class CustomerFacade extends ClientFacade {
         return false;
     }
 
-    public void purchaseCoupon(Coupon coupon) {
-        //todo : finish purchaseCoupon of CustomerFacade
+    public void purchaseCoupon(Coupon coupon) throws SQLException, InterruptedException, PurchaseException {
+        if (customerActions.isCustomerHaveCoupon(customerID, coupon.getId())) {
+            throw new PurchaseException("You already bought this coupon");
+        }
+        if (!couponAction.isCouponLeft(coupon.getId())) {
+            throw new PurchaseException("This coupon is no longer available");
+        }
+        couponAction.addCouponPurchase(customerID, coupon.getId());
     }
 
     public ArrayList<Coupon> getCustomerCoupons() throws SQLException, InterruptedException {

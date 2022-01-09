@@ -25,8 +25,18 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void addCustomer(Customer customer) {
-        // TODO: addCustomer
+    public void addCustomer(Customer customer) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customer.getId());
+        params.put(2, customer.getEmail());
+        params.put(3, customer.getPassword());
+        params.put(4, customer.getFirstName());
+        params.put(5, customer.getLastName());
+
+        String ADD_CUSTOMER = "INSERT INTO `coupon_project`.`customer_table` " +
+                "(`id`,`email`,`password`,`first_name`, `last_name`)" +
+                "VALUES (?,?,?,?,?)";
+        DatabaseUtils.runQueryForResult(ADD_CUSTOMER, params);
     }
 
     @Override
@@ -44,8 +54,13 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void deleteCustomer(int customerID) {
-        // TODO: deleteCustomer
+    public void deleteCustomer(int customerID) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, customerID);
+        String DELETE_CUSTOMER = "DELETE" +
+                "FROM `coupon_project`.`customer_table`" +
+                "WHERE id=?";
+        DatabaseUtils.runQueryForResult(DELETE_CUSTOMER, params);
     }
 
     @Override

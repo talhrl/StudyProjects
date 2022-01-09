@@ -45,8 +45,8 @@ public class AdminFacade extends ClientFacade {
         companyActions.updateCompany(company);
     }
 
-    public void deleteCompany(int CompanyID) {
-        //todo : finish deleteCompany of adminFacade
+    public void deleteCompany(int companyID) throws SQLException, InterruptedException {
+        companyActions.deleteCompany(companyID);
     }
 
     public ArrayList<Company> getAllCompanies() throws SQLException, InterruptedException {
@@ -65,17 +65,15 @@ public class AdminFacade extends ClientFacade {
         customerActions.updateCustomer(customer);
     }
 
-    public void deleteCustomer(int customerID) {
-        //todo : finish deleteCustomer of adminFacade
+    public void deleteCustomer(int customerID) throws SQLException, InterruptedException {
+        customerActions.deleteCustomer(customerID);
     }
 
-    public ArrayList<Customer> getAllCustomers() {
-        //todo : finish getAllCustomers of adminFacade
-        return new ArrayList<>();
+    public ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException {
+        return customerActions.getAllCustomers();
     }
 
-    public Customer getOneCustomer(int customerID) {
-        //todo : finish getOneCustomer of adminFacade
-        return new Customer();
+    public Customer getOneCustomer(int customerID) throws SQLException, InterruptedException {
+        return customerActions.getOneCustomer(customerID);
     }
 }

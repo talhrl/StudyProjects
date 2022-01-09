@@ -1,11 +1,17 @@
 package coupon_project.dao;
 
+import coupon_project.beans.Category;
 import coupon_project.beans.Coupon;
+import coupon_project.beans.Customer;
+import coupon_project.db_dao.CouponsDBDAO;
 
+import java.io.ObjectInputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CouponsDAO {
-    void addCoupon(Coupon coupon);
+
+    void addCoupon(Coupon coupon) throws SQLException, InterruptedException;
 
     void updateCoupon(Coupon coupon) throws SQLException, InterruptedException;
 
