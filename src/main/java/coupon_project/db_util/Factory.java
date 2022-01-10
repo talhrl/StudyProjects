@@ -2,12 +2,23 @@ package coupon_project.db_util;
 
 import coupon_project.dao.CompaniesDAO;
 import coupon_project.dao.CouponsDAO;
+import coupon_project.dao.CustomerVsCouponDAO;
 import coupon_project.dao.CustomersDAO;
 import coupon_project.db_dao.CompaniesDBDAO;
 import coupon_project.db_dao.CouponsDBDAO;
+import coupon_project.db_dao.CustomerVsCouponDBDAO;
 import coupon_project.db_dao.CustomersDBDAO;
 
 public class Factory {
+    public static CustomerVsCouponDAO getCustomerVsCouponDAO(String DB){
+        CustomerVsCouponDAO myCustomerVsCouponDAO = null;
+        switch (DB){
+            case "sql":
+                myCustomerVsCouponDAO =new CustomerVsCouponDBDAO();
+            default:
+                return myCustomerVsCouponDAO;
+        }
+    }
 
     public static CouponsDAO getCouponDAO(String DB){
         CouponsDAO myCouponsDAO = null;

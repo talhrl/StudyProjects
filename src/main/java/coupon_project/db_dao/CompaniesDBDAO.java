@@ -20,7 +20,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         params.put(1, email);
         params.put(2, password);
         String CHECK_COMPANY = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`company_table`" +
+                "FROM coupon_project.companies" +
                 "WHERE email=? AND password=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COMPANY, params);
         return resultSet.getInt("total") > 0;
@@ -34,7 +34,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
         params.put(2, company.getName());
         params.put(3, company.getEmail());
         params.put(4, company.getPassword());
-        String ADD_COMPANY = "INSERT INTO `coupon_project`.`company_table` " +
+        String ADD_COMPANY = "INSERT" +
+                "INTO coupon_project.companies " +
                 "(`id`,`name`,`email`,`password`)" +
                 "VALUES (?,?,?,?)";
         DatabaseUtils.runQueryForResult(ADD_COMPANY, params);
@@ -53,7 +54,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
         params.put(1, company.getEmail());
         params.put(2, company.getPassword());
         params.put(3, company.getId());
-        String UPDATE_COMPANY = "UPDATE `coupon_project`.`company_table` " +
+        String UPDATE_COMPANY = "UPDATE" +
+                "coupon_project.companies " +
                 "SET email=?, password=? " +
                 "WHERE id=?";
         DatabaseUtils.runQueryForResult(UPDATE_COMPANY, params);
@@ -64,7 +66,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyId);
         String CHECK_COMPANY = "DELETE" +
-                "FROM `coupon_project`.`company_table`" +
+                "FROM coupon_project.companies" +
                 "WHERE id=?";
         DatabaseUtils.runQueryForResult(CHECK_COMPANY, params);
     }
@@ -73,7 +75,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
     @Override
     public ArrayList<Company> getAllCompany() throws SQLException, InterruptedException {
         String GET_COMPANIES = "SELECT *" +
-                "FROM `coupon.project`.`company_table`";
+                "FROM coupon_project.companies";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANIES);
         ArrayList<Company> companyList = new ArrayList<>();
         while (resultSet.next()) {
@@ -94,7 +96,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Company company = new Company();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyId);
-        String GET_COMPANY = "SELECT (*) FROM `coupon_project`.`company_table`" +
+        String GET_COMPANY = "SELECT (*)" +
+                "FROM coupon_project.companies" +
                 "WHERE id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         company.setId(resultSet.getInt("id"));
@@ -110,7 +113,8 @@ public class CompaniesDBDAO implements CompaniesDAO {
     public int getCompanyIDbyEmail(String email) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
-        String GET_COMPANY = "SELECT id FROM `coupon_project`.`company_table`" +
+        String GET_COMPANY = "SELECT id" +
+                "FROM coupon_project.companies" +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         return resultSet.getInt("id");
@@ -121,7 +125,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, name);
         String CHECK_COMPANY_BY_NAME = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`company_table`" +
+                "FROM coupon_project.companies" +
                 "WHERE name=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COMPANY_BY_NAME, params);
         return resultSet.getInt("total") > 0;
@@ -132,7 +136,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
         String CHECK_COMPANY_BY_EMAIL = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`company_table`" +
+                "FROM coupon_project.companies" +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COMPANY_BY_EMAIL, params);
         return resultSet.getInt("total") > 0;

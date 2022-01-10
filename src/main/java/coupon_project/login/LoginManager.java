@@ -10,11 +10,16 @@ import coupon_project.utils.DateUtils;
 import java.sql.SQLException;
 
 public class LoginManager {
-    private static LoginManager instance = null;
+
+    private static volatile LoginManager instance = null;
 
     private LoginManager() {
     }
 
+    /**
+     * double check, so that only one instance will be created, and so that only at creation time the sync block will be accessed.
+     * @return reference to instance of login manager.
+     */
     public static LoginManager getInstance() {
         if (instance == null) {
             synchronized (LoginManager.class) {
@@ -26,6 +31,16 @@ public class LoginManager {
         return instance;
     }
 
+    /**
+     * gets email password and client type, and returns
+     * @param email client's email.
+     * @param password client's password.
+     * @param clientType one of the 3 client types (admin, company, customer).
+     * @return a facade object, which gives access to the client's allowed actions.
+     * @throws LoginException when email and password don't match client type.
+     * @throws SQLException when exception is raised from sql queries.
+     * @throws InterruptedException if thread is interrupted.
+     */
     public ClientFacade login(String email, String password, ClientType clientType) throws LoginException, SQLException, InterruptedException {
         switch (clientType) {
             case ADMINISTRATOR:

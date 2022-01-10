@@ -4,7 +4,7 @@ package coupon_project.beans;
  * Enum class for coupon category
  */
 public enum Category {
-    Food,
+    Grocery,
     Electricity,
     Restaurant,
     Vacation,

@@ -80,7 +80,7 @@ public class ConnectionPool {
     /**
      * Function for opening the stack, creating and adding all the connections
      *
-     * @throws SQLException
+     * @throws SQLException when sql throws exception.
      */
     private void openAllConnections() throws SQLException {
         for (int index = 0; index < NUM_OF_CONS; index += 1) {

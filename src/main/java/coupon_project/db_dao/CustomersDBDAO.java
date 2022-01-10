@@ -19,7 +19,7 @@ public class CustomersDBDAO implements CustomersDAO {
         params.put(1, email);
         params.put(2, password);
         String CHECK_CUSTOMER = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`customer_table`" +
+                "FROM coupon_project.customers" +
                 "WHERE email=? AND password=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
         return resultSet.getInt("total") > 0;
@@ -34,7 +34,8 @@ public class CustomersDBDAO implements CustomersDAO {
         params.put(4, customer.getFirstName());
         params.put(5, customer.getLastName());
 
-        String ADD_CUSTOMER = "INSERT INTO `coupon_project`.`customer_table` " +
+        String ADD_CUSTOMER = "INSERT" +
+                "INTO coupon_project.customers" +
                 "(`id`,`email`,`password`,`first_name`, `last_name`)" +
                 "VALUES (?,?,?,?,?)";
         DatabaseUtils.runQueryForResult(ADD_CUSTOMER, params);
@@ -48,7 +49,8 @@ public class CustomersDBDAO implements CustomersDAO {
         params.put(3, customer.getEmail());
         params.put(4, customer.getPassword());
         params.put(5, customer.getId());
-        String UPDATE_CUSTOMER = "UPDATE `coupon_project`.`customer_table` " +
+        String UPDATE_CUSTOMER = "UPDATE" +
+                "coupon_project.customers" +
                 "SET first_name=?, last_name=?, email=?, password=? " +
                 "WHERE id=?";
         DatabaseUtils.runQueryForResult(UPDATE_CUSTOMER, params);
@@ -59,7 +61,7 @@ public class CustomersDBDAO implements CustomersDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
         String DELETE_CUSTOMER = "DELETE" +
-                "FROM `coupon_project`.`customer_table`" +
+                "FROM coupon_project.customers" +
                 "WHERE id=?";
         DatabaseUtils.runQueryForResult(DELETE_CUSTOMER, params);
     }
@@ -67,7 +69,7 @@ public class CustomersDBDAO implements CustomersDAO {
     @Override
     public ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException {
         String GET_CUSTOMERS = "SELECT *" +
-                "FROM `coupon.project`.`customer_table`";
+                "FROM coupon_project.customers";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMERS);
         ArrayList<Customer> customerList = new ArrayList<>();
         while (resultSet.next()) {
@@ -88,7 +90,8 @@ public class CustomersDBDAO implements CustomersDAO {
         Customer customer = new Customer();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
-        String GET_CUSTOMER = "SELECT (*) FROM `coupon_project`.`customer_table`" +
+        String GET_CUSTOMER = "SELECT (*)" +
+                "FROM coupon_project.customers" +
                 "WHERE id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
         customer.setEmail(resultSet.getString("email"));
@@ -106,7 +109,7 @@ public class CustomersDBDAO implements CustomersDAO {
         params.put(1, customerID);
         params.put(2, couponID);
         String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`coupon_customers`" +
+                "FROM coupon_project.customers" +
                 "WHERE customer_id=? AND coupon_id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
         return resultSet.getInt("total") > 0;
@@ -116,7 +119,8 @@ public class CustomersDBDAO implements CustomersDAO {
     public int getCustomerIDbyEmail(String email) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
-        String GET_COMPANY = "SELECT id FROM `coupon_project`.`coupon_customers`" +
+        String GET_COMPANY = "SELECT id" +
+                "FROM coupon_project.customers" +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         return resultSet.getInt("id");
@@ -127,7 +131,7 @@ public class CustomersDBDAO implements CustomersDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
         String CHECK_CUSTOMER = "SELECT COUNT(*) AS total" +
-                "FROM `coupon_project`.`customer_table`" +
+                "FROM coupon_project.customers" +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
         return resultSet.getInt("total") > 0;

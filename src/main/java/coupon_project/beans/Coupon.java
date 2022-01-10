@@ -1,5 +1,6 @@
 package coupon_project.beans;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Coupon {

@@ -19,7 +19,6 @@ public class Company {
     /**
      * Constructor for company instance
      *
-     * @param id       Company ID
      * @param name     Company name
      * @param email    Company email
      * @param password Company password
@@ -32,9 +31,6 @@ public class Company {
         this.coupons = new ArrayList<>();
     }
 
-    /**
-     * Blank Constructor for using
-     */
     public Company() {
     }
 

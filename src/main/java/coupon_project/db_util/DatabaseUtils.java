@@ -19,24 +19,20 @@ public class DatabaseUtils {
      * @param query Command (mySQL language)
      * @throws InterruptedException
      */
-    public static void runQuery(String query) throws InterruptedException {
-        try {
-            connection = ConnectionPool.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.execute();
-        } catch (SQLException err) {
-            System.out.println(err.getMessage());
-        } finally {
-            ConnectionPool.getInstance().restoreConnection(connection);
-        }
+    public static void runQuery(String query) throws InterruptedException,SQLException {
+
+        connection = ConnectionPool.getInstance().getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.execute();
+        ConnectionPool.getInstance().restoreConnection(connection);
+
     }
 
     /**
      * Function for run a command on mySQL with parameters to replace "?"
-     *
      * @param query  Command (mySQL language)
      * @param params Parameters to replace "?"
-     * @throws InterruptedException
+     * @throws InterruptedException if thread is interrupted.
      */
     public static void runQuery(String query, Map<Integer, Object> params) throws InterruptedException {
         try {
@@ -60,7 +56,6 @@ public class DatabaseUtils {
                 } catch (SQLException err) {
                     System.out.println(err.getMessage());
                 }
-
             });
             statement.execute();
         } catch (SQLException err) {

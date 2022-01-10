@@ -17,6 +17,13 @@ public class AdminFacade extends ClientFacade {
     public AdminFacade() {
     }
 
+    /**
+     * checks if the login credentials are correct.
+     *
+     * @param email    Admin's email.
+     * @param password admin's password.
+     * @return whether credentials are correct.
+     */
     public boolean login(String email, String password) {
         return email.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD);
     }
@@ -37,6 +44,12 @@ public class AdminFacade extends ClientFacade {
         companyActions.addCompany(company);
     }
 
+    /**
+     * updates company's data. Can only update company's email or username
+     * @param company Company object.
+     * @throws SQLException when sql raises SQLException.
+     * @throws InterruptedException when sql raises InterruptedException.
+     */
     public void updateCompany(Company company) throws SQLException, InterruptedException {
         companyActions.updateCompany(company);
     }

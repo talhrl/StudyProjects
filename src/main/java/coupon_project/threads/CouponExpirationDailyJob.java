@@ -23,8 +23,8 @@ public class CouponExpirationDailyJob implements Runnable {
         while (!quit) {
             try {
                 for (Coupon coupon : couponsDAO.getAllCoupons())
-                    if (GregorianCalendar.getInstance().getTime().before(coupon.getEndDate())) {
-                        for (Customer customer :this.couponsDAO.getAllCouponCustomers(coupon.getId())){
+                    if (couponsDAO.isCouponValid(coupon.getId())) {
+                        for (Customer customer : this.couponsDAO.getAllCouponCustomers(coupon.getId())) {
                             this.couponsDAO.deleteCouponPurchase(customer.getId(), coupon.getId());
                         }
                         this.couponsDAO.deleteCoupon(coupon.getId());
@@ -44,6 +44,11 @@ public class CouponExpirationDailyJob implements Runnable {
         this.quit = true;
     }
 
+    /**
+     * constructor.
+     *
+     * @param DB name of the database you intend to work with.
+     */
     public CouponExpirationDailyJob(String DB) {
         this.couponsDAO = Factory.getCouponDAO(DB);
 

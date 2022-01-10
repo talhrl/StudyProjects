@@ -11,7 +11,7 @@ public interface CompaniesDAO {
      *
      * @param email- company login email
      * @param password - company login password
-     * @return true if company exist false if not
+     * @return  if company exist
      * @throws SQLException
      * @throws InterruptedException
      */
@@ -76,7 +76,7 @@ public interface CompaniesDAO {
      * checks if company already exist by name
      *
      * @param name- company name
-     * @return true if company exist false if not
+     * @return if company exist
      * @throws SQLException
      * @throws InterruptedException
      */
@@ -86,7 +86,7 @@ public interface CompaniesDAO {
      *  checks if company already exist by email
      *
      * @param email company email
-     * @return true if company exist false if not
+     * @return if company exist
      * @throws SQLException
      * @throws InterruptedException
      */
