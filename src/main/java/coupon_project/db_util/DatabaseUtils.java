@@ -99,8 +99,10 @@ public class DatabaseUtils {
      * @return Wanted data
      * @throws InterruptedException
      */
-    public static Resultset runQueryForResult(String query, Map<Integer, Object> params) throws InterruptedException {
-        Resultset resultset = null;
+    public static ResultSet runQueryForResult(String query, Map<Integer, Object> params) throws InterruptedException {
+        id++;
+
+        ResultSet resultset = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
@@ -124,7 +126,8 @@ public class DatabaseUtils {
                 }
 
             });
-            resultset = (Resultset) statement.executeQuery();
+            System.out.println(""+id+":"+statement);
+            resultset =  statement.executeQuery();
         } catch (SQLException err) {
             System.out.println(err.getMessage());
         } finally {
