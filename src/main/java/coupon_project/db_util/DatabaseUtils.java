@@ -100,8 +100,7 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static ResultSet runQueryForResult(String query, Map<Integer, Object> params) throws InterruptedException {
-        id++;
-
+        int temp_id = id++;
         ResultSet resultset = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -126,7 +125,7 @@ public class DatabaseUtils {
                 }
 
             });
-            System.out.println(""+id+":"+statement);
+            System.out.println(temp_id+":"+statement);
             resultset =  statement.executeQuery();
         } catch (SQLException err) {
             System.out.println(temp_id+err.getMessage());
