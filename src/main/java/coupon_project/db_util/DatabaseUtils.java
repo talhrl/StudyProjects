@@ -17,13 +17,13 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static void runQuery(String query) throws InterruptedException, SQLException {
-        id++;
-        System.out.println(""+id+":"+query);
+        int temp_id = id++;
+        System.out.println(""+temp_id+":"+query);
         connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.execute();
         ConnectionPool.getInstance().restoreConnection(connection);
-        System.out.println("query number " +id+" done");
+        System.out.println("query number " +temp_id+" done");
     }
 
     /**
@@ -34,8 +34,8 @@ public class DatabaseUtils {
      * @throws InterruptedException if thread is interrupted.
      */
     public static void runQuery(String query, Map<Integer, Object> params) throws InterruptedException {
+        int temp_id = id++;
         try {
-            id++;
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             params.forEach((key, value) -> {
@@ -57,13 +57,13 @@ public class DatabaseUtils {
                     System.out.println(err.getMessage());
                 }
             });
-            System.out.println(""+id+":"+statement);
+            System.out.println(""+temp_id+":"+statement);
             statement.execute();
         } catch (SQLException err) {
-            System.out.println(err.getMessage());
+            System.out.println(temp_id+err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
-            System.out.println("query number " +id+" done");
+            System.out.println("query number " +temp_id+" done");
         }
     }
 
@@ -75,19 +75,19 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static ResultSet runQueryForResult(String query) throws InterruptedException {
-        id++;
-        System.out.println(""+id+":"+query);
+        int temp_id = id++;
+        System.out.println(""+temp_id+":"+query);
         ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
         } catch (SQLException err) {
-            System.out.println(err.getMessage());
+            System.out.println(temp_id+err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
         }
-        System.out.println("query number " +id+" done");
+        System.out.println("query number " +temp_id+" done");
         return resultSet;
     }
 
@@ -129,11 +129,11 @@ public class DatabaseUtils {
             System.out.println(""+id+":"+statement);
             resultset =  statement.executeQuery();
         } catch (SQLException err) {
-            System.out.println(err.getMessage());
+            System.out.println(temp_id+err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
         }
-        System.out.println("query number " +id+" done");
+        System.out.println("query number " +temp_id+" done");
         return resultset;
     }
 }

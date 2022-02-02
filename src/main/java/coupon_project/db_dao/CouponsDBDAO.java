@@ -283,6 +283,7 @@ public class CouponsDBDAO implements CouponsDAO {
                 "FROM coupon_project.coupons " +
                 "WHERE company_id=? AND title=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_FOR_COUPON_BY_NAME, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 }

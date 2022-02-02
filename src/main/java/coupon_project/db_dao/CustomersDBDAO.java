@@ -22,6 +22,7 @@ public class CustomersDBDAO implements CustomersDAO {
                 "FROM coupon_project.customers " +
                 "WHERE email=? AND password=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 
@@ -33,23 +34,23 @@ public class CustomersDBDAO implements CustomersDAO {
                 "FROM coupon_project.customers " +
                 "WHERE id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(IS_COUPON_EXISTS, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 
     @Override
     public void addCustomer(Customer customer) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customer.getId());
-        params.put(2, customer.getEmail());
-        params.put(3, customer.getPassword());
-        params.put(4, customer.getFirstName());
-        params.put(5, customer.getLastName());
+        params.put(1, customer.getEmail());
+        params.put(2, customer.getPassword());
+        params.put(3, customer.getFirstName());
+        params.put(4, customer.getLastName());
 
         String ADD_CUSTOMER = "INSERT " +
                 "INTO coupon_project.customers " +
-                "(`id`,`email`,`password`,`first_name`, `last_name`) " +
-                "VALUES (?,?,?,?,?)";
-        DatabaseUtils.runQueryForResult(ADD_CUSTOMER, params);
+                "(`email`,`password`,`first_name`, `last_name`) " +
+                "VALUES (?,?,?,?)";
+        DatabaseUtils.runQuery(ADD_CUSTOMER, params);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class CustomersDBDAO implements CustomersDAO {
                 "coupon_project.customers " +
                 "SET first_name=?, last_name=?, password=? " +
                 "WHERE email=?";
-        DatabaseUtils.runQueryForResult(UPDATE_CUSTOMER, params);
+        DatabaseUtils.runQuery(UPDATE_CUSTOMER, params);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String DELETE_CUSTOMER = "DELETE " +
                 "FROM coupon_project.customers " +
                 "WHERE id=?";
-        DatabaseUtils.runQueryForResult(DELETE_CUSTOMER, params);
+        DatabaseUtils.runQuery(DELETE_CUSTOMER, params);
     }
 
     @Override
@@ -100,10 +101,11 @@ public class CustomersDBDAO implements CustomersDAO {
         Customer customer = new Customer();
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
-        String GET_CUSTOMER = "SELECT (*) " +
+        String GET_CUSTOMER = "SELECT * " +
                 "FROM coupon_project.customers " +
                 "WHERE id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
+        resultSet.next();
         customer.setEmail(resultSet.getString("email"));
         customer.setId(resultSet.getInt("id"));
         customer.setFirstName(resultSet.getString("first_name"));
@@ -122,6 +124,7 @@ public class CustomersDBDAO implements CustomersDAO {
                 "FROM coupon_project.customers " +
                 "WHERE customer_id=? AND coupon_id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 
@@ -133,6 +136,7 @@ public class CustomersDBDAO implements CustomersDAO {
                 "FROM coupon_project.customers " +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
+        resultSet.next();
         return resultSet.getInt("id");
     }
 
@@ -144,6 +148,7 @@ public class CustomersDBDAO implements CustomersDAO {
                 "FROM coupon_project.customers " +
                 "WHERE email=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 }

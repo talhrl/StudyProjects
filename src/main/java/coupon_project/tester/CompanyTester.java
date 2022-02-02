@@ -44,7 +44,7 @@ public class CompanyTester {
         //                                           RoofMart
         //**************************************************************************************************************
         try {
-            companyFacade = (CompanyFacade) LoginManager.getInstance().login("Roof@mart.com", "roofmart", ClientType.COMPANY);
+            companyFacade = (CompanyFacade) LoginManager.getInstance().login("Roof@mart.com", "groceries", ClientType.COMPANY);
 
             //void addCoupon(Coupon coupon) six coupons success
             try {

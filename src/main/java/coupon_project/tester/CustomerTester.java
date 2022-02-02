@@ -41,68 +41,68 @@ public class CustomerTester {
             try {
                 customerFacade.purchaseCoupon(1);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(2);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(5);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             //public void purchaseCoupon(int couponID) failed by coupon doesn't exists
             try {
                 customerFacade.purchaseCoupon(55);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             //public void purchaseCoupon(int couponID) failed by already bought
             try {
                 customerFacade.purchaseCoupon(5);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public void purchaseCoupon(int couponID) failed by already expired
             try {
                 customerFacade.purchaseCoupon(3);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public void purchaseCoupon(int couponID) failed by no left to buy
             try {
                 customerFacade.purchaseCoupon(4);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCoupons() success
             try {
                 customerFacade.getCustomerCoupons();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) success
             try {
                 customerFacade.getCustomerCouponsByCategory(Category.Fashion);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(double maxPrice) success
             try {
                 customerFacade.getCustomerCouponsTillMaxPrice(89.0);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public Customer getCustomerDetails() success
             try {
                 customerFacade.getCustomerDetails();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
         } catch (LoginException | SQLException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 
@@ -115,44 +115,44 @@ public class CustomerTester {
             try {
                 customerFacade.purchaseCoupon(22);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(29);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(24);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCoupons() success
             try {
                 customerFacade.getCustomerCoupons();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) success
             try {
                 customerFacade.getCustomerCouponsByCategory(Category.Fashion);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(double maxPrice) success
             try {
                 customerFacade.getCustomerCouponsTillMaxPrice(95.50);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public Customer getCustomerDetails() success
             try {
                 customerFacade.getCustomerDetails();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
         } catch (LoginException | SQLException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 
@@ -165,44 +165,44 @@ public class CustomerTester {
             try {
                 customerFacade.purchaseCoupon(15);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(18);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(13);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCoupons() success
             try {
                 customerFacade.getCustomerCoupons();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) success
             try {
                 customerFacade.getCustomerCouponsByCategory(Category.Restaurant);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(double maxPrice) success
             try {
                 customerFacade.getCustomerCouponsTillMaxPrice(45.55);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public Customer getCustomerDetails() success
             try {
                 customerFacade.getCustomerDetails();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
         } catch (LoginException | SQLException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 
@@ -215,44 +215,44 @@ public class CustomerTester {
             try {
                 customerFacade.purchaseCoupon(6);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(7);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(9);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCoupons() success
             try {
                 customerFacade.getCustomerCoupons();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) success
             try {
                 customerFacade.getCustomerCouponsByCategory(Category.Vacation);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(double maxPrice) success
             try {
                 customerFacade.getCustomerCouponsTillMaxPrice(60.75);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public Customer getCustomerDetails() success
             try {
                 customerFacade.getCustomerDetails();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
         } catch (LoginException | SQLException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
 
@@ -265,44 +265,44 @@ public class CustomerTester {
             try {
                 customerFacade.purchaseCoupon(11);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(17);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             try {
                 customerFacade.purchaseCoupon(20);
             } catch (PurchaseException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCoupons() success
             try {
                 customerFacade.getCustomerCoupons();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsByCategory(Category category) success
             try {
                 customerFacade.getCustomerCouponsByCategory(Category.Vacation);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public ArrayList<Coupon> getCustomerCouponsTillMaxPrice(double maxPrice) success
             try {
                 customerFacade.getCustomerCouponsTillMaxPrice(60.75);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
             // public Customer getCustomerDetails() success
             try {
                 customerFacade.getCustomerDetails();
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());;
             }
         } catch (LoginException | SQLException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }
