@@ -23,8 +23,8 @@ public class Company {
      * @param email    Company email
      * @param password Company password
      */
-    public Company(int id, String name, String email, String password) {
-        this.id = id;
+    public Company(String name, String email, String password) {
+        this.id = 0;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -126,12 +126,7 @@ public class Company {
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", coupons=" + coupons +
-                '}';
+        return id + ", " + name + " (" + email + "," + password + ") " + coupons.size() + " coupons";
     }
 }
 

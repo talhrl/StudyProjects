@@ -95,6 +95,15 @@ public interface CouponsDAO {
 
     void deleteCouponPurchase(int customerID, int couponID) throws SQLException, InterruptedException;
     /**
+     * A method that checks whether a particular coupon exists
+     *
+     * @param couponID coupon id
+     * @return whether a particular coupon exists
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    boolean isCouponExists(int couponID) throws SQLException, InterruptedException;
+    /**
      * A method that checks whether a particular coupon remains
      *
      * @param couponID coupon id

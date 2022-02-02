@@ -20,7 +20,7 @@ public class DataBaseManager {
     public static final String CREATE_DB = "CREATE DATABASE IF NOT EXISTS coupon_project";
 
     // SQL command for deleting database "coupon_project"
-    public static final String DROP_DB = "DROP DATABASE coupon_project";
+    public static final String DROP_DB = "DROP DATABASE IF EXISTS coupon_project";
 
     // SQL command for creating category table
     public static final String CREATE_CATEGORY_TABLE =
@@ -28,6 +28,10 @@ public class DataBaseManager {
                     "`id` INT NOT NULL AUTO_INCREMENT,\n" +
                     "`name` VARCHAR(45) NOT NULL,\n" +
                     "PRIMARY KEY (`id`));";
+
+    // SQL command for deleting category table
+    public static final String DROP_CATEGORY_TABLE =
+            "DROP TABLE IF EXISTS coupon_project.categories";
 
     // SQL command for creating company table
     public static final String CREATE_COMPANY_TABLE =
@@ -38,6 +42,10 @@ public class DataBaseManager {
                     "`password` VARCHAR(45) NOT NULL,\n" +
                     "PRIMARY KEY (`id`));";
 
+    // SQL command for deleting company table
+    public static final String DROP_COMPANY_TABLE =
+            "DROP TABLE IF EXISTS coupon_project.companies";
+
     // SQL command for creating customer table
     public static final String CREATE_CUSTOMER_TABLE =
             "CREATE TABLE IF NOT EXISTS coupon_project.customers(\n" +
@@ -47,6 +55,10 @@ public class DataBaseManager {
                     "`email` VARCHAR(45) NOT NULL,\n" +
                     "`password` VARCHAR(45) NOT NULL,\n" +
                     "PRIMARY KEY (`id`));";
+
+    // SQL command for deleting customer table
+    public static final String DROP_CUSTOMER_TABLE =
+            "DROP TABLE IF EXISTS coupon_project.customers";
 
     // SQL command for creating coupons table
     public static final String CREATE_COUPONS_TABLE =
@@ -75,6 +87,10 @@ public class DataBaseManager {
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION)\n";
 
+    // SQL command for deleting coupons table
+    public static final String DROP_COUPONS_TABLE =
+            "DROP TABLE IF EXISTS coupon_project.coupons";
+
     // SQL command for creating "Coupon VS Customers" table
     public static final String CREATE_COUPONS_CUSTOMER_TABLE =
             "CREATE TABLE IF NOT EXISTS coupon_project.coupon_customers(\n" +
@@ -92,6 +108,10 @@ public class DataBaseManager {
                     "REFERENCES coupon_project.`coupons` (`id`)\n" +
                     "ON DELETE NO ACTION\n" +
                     "ON UPDATE NO ACTION)";
+
+    // SQL command for deleting "Coupon VS Customers" table
+    public static final String DROP_COUPONS_CUSTOMER_TABLE =
+            "DROP TABLE IF EXISTS coupon_project.coupon_customers";
 
 
     /**
@@ -118,6 +138,10 @@ public class DataBaseManager {
         DatabaseUtils.runQuery(CREATE_CATEGORY_TABLE);
     }
 
+    public static void dropCategoryTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(DROP_CATEGORY_TABLE);
+    }
+
     /**
      * A function for creating company table
      *
@@ -126,6 +150,16 @@ public class DataBaseManager {
      */
     public static void createCompanyTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COMPANY_TABLE);
+    }
+
+    /**
+     * A function for deleting company table
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void dropCompanyTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(DROP_COMPANY_TABLE);
     }
 
     /**
@@ -139,6 +173,16 @@ public class DataBaseManager {
     }
 
     /**
+     * A function for deleting customer table
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void dropCustomerTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(DROP_CUSTOMER_TABLE);
+    }
+
+    /**
      * A function for creating coupon table
      *
      * @throws SQLException
@@ -149,6 +193,16 @@ public class DataBaseManager {
     }
 
     /**
+     * A function for deleting coupon table
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void dropCouponTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(DROP_COUPONS_TABLE);
+    }
+
+    /**
      * A function for creating Coupon VS Customer table
      *
      * @throws SQLException
@@ -156,6 +210,16 @@ public class DataBaseManager {
      */
     public static void createCouponVSCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COUPONS_CUSTOMER_TABLE);
+    }
+
+    /**
+     * A function for deleting Coupon VS Customer table
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void dropCouponVSCustomerTable() throws SQLException, InterruptedException {
+        DatabaseUtils.runQuery(DROP_COUPONS_CUSTOMER_TABLE);
     }
 
     /**
@@ -171,5 +235,20 @@ public class DataBaseManager {
         createCategoryTable();
         createCouponTable();
         createCouponVSCustomerTable();
+    }
+
+    /**
+     * A function for creating the whole project (database, company table, customer table and coupon table)
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    public static void dropCouponsProjectDB() throws SQLException, InterruptedException {
+        dropDataBase();
+        dropCompanyTable();
+        dropCustomerTable();
+        dropCategoryTable();
+        dropCouponTable();
+        dropCouponVSCustomerTable();
     }
 }

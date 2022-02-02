@@ -19,8 +19,8 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
         params.put(2, couponID);
-        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total" +
-                "FROM coupon_project.coupon_customers" +
+        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total"  +
+                "FROM coupon_project.coupon_customers " +
                 "WHERE customer_id=? AND coupon_id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
         return resultSet.getInt("total") > 0;
@@ -31,9 +31,9 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
         params2.put(2, customerID);
-        String ADD_PURCHASE = "INSERT" +
-                "INTO coupon_project.coupon_customers" +
-                "(`coupon_id`,`customer_id`)" +
+        String ADD_PURCHASE = "INSERT " +
+                "INTO coupon_project.coupon_customers " +
+                "(`coupon_id`,`customer_id`) " +
                 "VALUES (?,?)";
         DatabaseUtils.runQuery(ADD_PURCHASE, params2);
     }
@@ -43,9 +43,9 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
         params2.put(2, customerID);
-        String DELETE_PURCHASE = "DELETE" +
-                "FROM coupon_project.coupon_customers" +
-                "WHERE customer_id=? AND coupon_id=?";
+        String DELETE_PURCHASE = "DELETE " +
+                "FROM coupon_project.coupon_customers " +
+                "WHERE customer_id=? AND coupon_id=? ";
         DatabaseUtils.runQuery(DELETE_PURCHASE, params2);
     }
 
@@ -53,8 +53,8 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     public void deleteAllPurchasesByCoupon(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
-        String DELETE_PURCHASE = "DELETE" +
-                "FROM coupon_project.coupon_customers" +
+        String DELETE_PURCHASE = "DELETE " +
+                "FROM coupon_project.coupon_customers " +
                 "WHERE coupon_id=?";
         DatabaseUtils.runQuery(DELETE_PURCHASE, params2);
     }
@@ -63,8 +63,8 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     public void deleteAllPurchasesByCustomer(int customerID) throws SQLException, InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, customerID);
-        String DELETE_PURCHASE = "DELETE" +
-                "FROM coupon_project.coupon_customers" +
+        String DELETE_PURCHASE = "DELETE " +
+                "FROM coupon_project.coupon_customers " +
                 "WHERE customer_id=?";
         DatabaseUtils.runQuery(DELETE_PURCHASE, params2);
     }
@@ -73,8 +73,8 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     public ArrayList<Coupon> getAllCustomerCoupons(int customerID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
-        String GET_COUPON = "SELECT coupon_id" +
-                "FROM coupon_project.coupon_customers" +
+        String GET_COUPON = "SELECT coupon_id " +
+                "FROM coupon_project.coupon_customers " +
                 "WHERE customer_id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON, params);
         ArrayList<Coupon> couponsList = new ArrayList<>();

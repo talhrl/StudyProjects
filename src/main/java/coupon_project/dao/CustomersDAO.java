@@ -18,6 +18,16 @@ public interface CustomersDAO {
     boolean isCustomerExists(String email, String password) throws SQLException, InterruptedException;
 
     /**
+     * checks if specific customer exist by ID
+     *
+     * @param customerID- customer ID
+     * @return if company exists
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    boolean isCustomerExistsByID(int customerID) throws SQLException, InterruptedException;
+
+    /**
      * add new customer to the system
      *
      * @param customer data

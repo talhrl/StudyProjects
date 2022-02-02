@@ -28,7 +28,9 @@ public class AdminFacade extends ClientFacade {
         return email.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD);
     }
 
-    /** adds new company to the database.
+    /**
+     * adds new company to the database.
+     *
      * @param company A company object.
      * @throws SQLException            when sql raises an exception.
      * @throws InterruptedException    when thread is interrupted.
@@ -46,28 +48,39 @@ public class AdminFacade extends ClientFacade {
 
     /**
      * updates company's data. Can only update company's email or username
+     *
      * @param company Company object.
-     * @throws SQLException when sql raises SQLException.
+     * @throws SQLException         when sql raises SQLException.
      * @throws InterruptedException when sql raises InterruptedException.
      */
-    public void updateCompany(Company company) throws SQLException, InterruptedException {
+    public void updateCompany(Company company) throws SQLException, InterruptedException, AdministrationException {
+        if (!companyActions.isCompanyExistsByName(company.getName())) {
+            throw new AdministrationException("Company doesn't exists");
+        }
+        System.out.println("was here!"+ company);
         companyActions.updateCompany(company);
     }
 
-    public void deleteCompany(int companyID) throws SQLException, InterruptedException {
+    public void deleteCompany(int companyID) throws SQLException, InterruptedException, AdministrationException {
+        if (!companyActions.isCompanyExistsByID(companyID)) {
+            throw new AdministrationException("This company doesn't exists");
+        }
         ArrayList<Coupon> couponArrayList = couponActions.getAllCompanyCoupons(companyID);
         for (Coupon coupon : couponArrayList) {
             purchaseActions.deleteAllPurchasesByCoupon(coupon.getId());
         }
-        companyActions.deleteCompany(companyID);
         couponActions.deleteAllCompanyCoupons(companyID);
+        companyActions.deleteCompany(companyID);
     }
 
     public ArrayList<Company> getAllCompanies() throws SQLException, InterruptedException {
         return companyActions.getAllCompany();
     }
 
-    public Company getOneCompany(int companyID) throws SQLException, InterruptedException {
+    public Company getOneCompany(int companyID) throws SQLException, InterruptedException, AdministrationException {
+        if (!companyActions.isCompanyExistsByID(companyID)) {
+            throw new AdministrationException("Company doesn't exists");
+        }
         return companyActions.getOneCompany(companyID);
     }
 
@@ -78,11 +91,17 @@ public class AdminFacade extends ClientFacade {
         customerActions.addCustomer(customer);
     }
 
-    public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
+    public void updateCustomer(Customer customer) throws SQLException, InterruptedException, AdministrationException {
+        if (!customerActions.isCustomerExistsByID(customer.getId())) {
+            throw new AdministrationException("This customer doesn't exists");
+        }
         customerActions.updateCustomer(customer);
     }
 
-    public void deleteCustomer(int customerID) throws SQLException, InterruptedException {
+    public void deleteCustomer(int customerID) throws SQLException, InterruptedException, AdministrationException {
+        if (!customerActions.isCustomerExistsByID(customerID)) {
+            throw new AdministrationException("This customer doesn't exists");
+        }
         customerActions.deleteCustomer(customerID);
         purchaseActions.deleteAllPurchasesByCustomer(customerID);
     }
@@ -91,7 +110,10 @@ public class AdminFacade extends ClientFacade {
         return customerActions.getAllCustomers();
     }
 
-    public Customer getOneCustomer(int customerID) throws SQLException, InterruptedException {
+    public Customer getOneCustomer(int customerID) throws SQLException, InterruptedException, AdministrationException {
+        if (!customerActions.isCustomerExistsByID(customerID)) {
+            throw new AdministrationException("This customer doesn't exists");
+        }
         return customerActions.getOneCustomer(customerID);
     }
 }

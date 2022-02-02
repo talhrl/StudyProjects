@@ -125,6 +125,16 @@ public class CouponsDBDAO implements CouponsDAO {
         return resultSet.getInt("amount") > 0;
     }
 
+    @Override
+    public boolean isCouponExists(int couponID) throws SQLException, InterruptedException {
+        Map<Integer, Object> params = new HashMap<>();
+        params.put(1, couponID);
+        String IS_COUPON_EXISTS = "SELECT COUNT(*) AS total " +
+                "FROM coupon_project.coupons " +
+                "WHERE id=?";
+        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(IS_COUPON_EXISTS, params);
+        return resultSet.getInt("total") > 0;
+    }
 
     @Override
     public ArrayList<Coupon> getAllCompanyCoupons(int companyID) throws SQLException, InterruptedException {
@@ -158,8 +168,8 @@ public class CouponsDBDAO implements CouponsDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyID);
         params.put(2, category.ordinal());
-        String GET_COUPON_CATEGORY = "SELECT *" +
-                "FROM coupon_project.coupons" +
+        String GET_COUPON_CATEGORY = "SELECT * " +
+                "FROM coupon_project.coupons " +
                 "WHERE company_id=? AND category=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON_CATEGORY, params);
         ArrayList<Coupon> couponsList = new ArrayList<>();
@@ -186,9 +196,9 @@ public class CouponsDBDAO implements CouponsDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyID);
         params.put(2, maxPrice);
-        String GET_COUPON_TILL_PRICE = "SELECT *" +
-                "FROM coupon_project.coupons" +
-                "WHERE company_id=? AND price<=?";
+        String GET_COUPON_TILL_PRICE = "SELECT * " +
+                "FROM coupon_project.coupons " +
+                "WHERE company_id=? AND price<=? ";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON_TILL_PRICE, params);
         ArrayList<Coupon> couponList = new ArrayList<>();
         while (resultSet.next()) {
@@ -212,9 +222,9 @@ public class CouponsDBDAO implements CouponsDAO {
     public void decreaseCouponAmount(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, couponID);
-        String REDUCE_COUPON_AMOUNT = "UPDATE" +
-                "coupon_project.coupons" +
-                "SET amount = amount-1" +
+        String REDUCE_COUPON_AMOUNT = "UPDATE " +
+                "coupon_project.coupons " +
+                "SET amount = amount-1 " +
                 "WHERE id=?";
         DatabaseUtils.runQuery(REDUCE_COUPON_AMOUNT, params);
     }
@@ -225,8 +235,8 @@ public class CouponsDBDAO implements CouponsDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
         params.put(2, couponID);
-        String DELETE_COUPON_FOR_CUSTOMER = "DELETE" +
-                "FROM coupon_project.coupons" +
+        String DELETE_COUPON_FOR_CUSTOMER = "DELETE " +
+                "FROM coupon_project.coupons " +
                 "WHERE customer_id=? AND coupon_id=?";
         DatabaseUtils.runQueryForResult(DELETE_COUPON_FOR_CUSTOMER, params);
     }
@@ -235,8 +245,8 @@ public class CouponsDBDAO implements CouponsDAO {
     public ArrayList<Customer> getAllCouponCustomers(int couponID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, couponID);
-        String GET_CUSTOMER = "SELECT customer_id" +
-                "FROM coupon_project.coupons" +
+        String GET_CUSTOMER = "SELECT customer_id " +
+                "FROM coupon_project.coupons " +
                 "WHERE coupon_id=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
         ArrayList<Customer> customerList = new ArrayList<>();
@@ -258,8 +268,8 @@ public class CouponsDBDAO implements CouponsDAO {
     public void deleteAllCompanyCoupons(int companyID) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyID);
-        String DELETE_COUPON_BY_COMPANY = "DELETE *" +
-                "FROM coupon_project.coupons" +
+        String DELETE_COUPON_BY_COMPANY = "DELETE " +
+                "FROM coupon_project.coupons " +
                 "WHERE company_id=?";
         DatabaseUtils.runQuery(DELETE_COUPON_BY_COMPANY, params);
     }
@@ -269,8 +279,8 @@ public class CouponsDBDAO implements CouponsDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, companyID);
         params.put(2, name);
-        String CHECK_FOR_COUPON_BY_NAME = "SELECT COUNT(*) as total" +
-                "FROM coupon_project.coupons" +
+        String CHECK_FOR_COUPON_BY_NAME = "SELECT COUNT(*) as total " +
+                "FROM coupon_project.coupons " +
                 "WHERE company_id=? AND title=?";
         ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_FOR_COUPON_BY_NAME, params);
         return resultSet.getInt("total") > 0;

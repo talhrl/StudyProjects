@@ -19,14 +19,13 @@ public class Customer {
     /**
      * Constructor for customer instance
      *
-     * @param id        Customer ID
      * @param firstName Customer first name
      * @param lastName  Customer last name
      * @param email     Customer email
      * @param password  Customer password
      */
-    public Customer(int id, String firstName, String lastName, String email, String password) {
-        this.id = id;
+    public Customer(String firstName, String lastName, String email, String password) {
+        this.id = 0;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -150,13 +149,6 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", coupons=" + coupons +
-                '}';
+        return id + "," + firstName + " " + lastName + " (" + email + "," + password + ") " + coupons.size() + " coupons";
     }
 }

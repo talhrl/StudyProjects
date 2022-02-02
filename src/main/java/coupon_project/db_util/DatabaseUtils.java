@@ -2,14 +2,11 @@ package coupon_project.db_util;
 
 import com.mysql.cj.protocol.Resultset;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Map;
 
 public class DatabaseUtils {
-
+    static int id = 0;
     // Creating a private instance of connection
     private static Connection connection;
 
@@ -19,23 +16,26 @@ public class DatabaseUtils {
      * @param query Command (mySQL language)
      * @throws InterruptedException
      */
-    public static void runQuery(String query) throws InterruptedException,SQLException {
-
+    public static void runQuery(String query) throws InterruptedException, SQLException {
+        id++;
+        System.out.println(""+id+":"+query);
         connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.execute();
         ConnectionPool.getInstance().restoreConnection(connection);
-
+        System.out.println("query number " +id+" done");
     }
 
     /**
      * Function for run a command on mySQL with parameters to replace "?"
+     *
      * @param query  Command (mySQL language)
      * @param params Parameters to replace "?"
      * @throws InterruptedException if thread is interrupted.
      */
     public static void runQuery(String query, Map<Integer, Object> params) throws InterruptedException {
         try {
+            id++;
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
             params.forEach((key, value) -> {
@@ -57,11 +57,13 @@ public class DatabaseUtils {
                     System.out.println(err.getMessage());
                 }
             });
+            System.out.println(""+id+":"+statement);
             statement.execute();
         } catch (SQLException err) {
             System.out.println(err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
+            System.out.println("query number " +id+" done");
         }
     }
 
@@ -72,18 +74,21 @@ public class DatabaseUtils {
      * @return Wanted data
      * @throws InterruptedException
      */
-    public static Resultset runQueryForResult(String query) throws InterruptedException {
-        Resultset resultset = null;
+    public static ResultSet runQueryForResult(String query) throws InterruptedException {
+        id++;
+        System.out.println(""+id+":"+query);
+        ResultSet resultSet = null;
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
-            resultset = (Resultset) statement.executeQuery();
+            resultSet = statement.executeQuery();
         } catch (SQLException err) {
             System.out.println(err.getMessage());
         } finally {
-            connection = ConnectionPool.getInstance().getConnection();
+            ConnectionPool.getInstance().restoreConnection(connection);
         }
-        return resultset;
+        System.out.println("query number " +id+" done");
+        return resultSet;
     }
 
     /**
@@ -123,8 +128,9 @@ public class DatabaseUtils {
         } catch (SQLException err) {
             System.out.println(err.getMessage());
         } finally {
-            connection = ConnectionPool.getInstance().getConnection();
+            ConnectionPool.getInstance().restoreConnection(connection);
         }
+        System.out.println("query number " +id+" done");
         return resultset;
     }
 }

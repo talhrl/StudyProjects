@@ -23,31 +23,41 @@ public class CompanyFacade extends ClientFacade {
         return false;
     }
 
-    void addCoupon(Coupon coupon) throws SQLException, InterruptedException, CompanyException {
+    public void addCoupon(Coupon coupon) throws SQLException, InterruptedException, CompanyException {
         if (couponActions.isCouponExistsByNameForCompany(coupon.getTitle(), companyID)) {
             throw new CompanyException("Coupon name already exists for your company");
         }
+        coupon.setCompanyID(companyID);
         couponActions.addCoupon(coupon);
     }
 
-    void updateCoupon(Coupon coupon) throws SQLException, InterruptedException {
+    public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, CompanyException {
+        if (!couponActions.isCouponExistsByNameForCompany(coupon.getTitle(), companyID)) {
+            throw new CompanyException("This coupon doesn't even exist");
+        }
         couponActions.updateCoupon(coupon);
     }
 
-    void deleteCoupon(int couponID) throws SQLException, InterruptedException {
+    public void deleteCoupon(int couponID) throws SQLException, InterruptedException, CompanyException {
+        if (!couponActions.isCouponExists(couponID)) {
+            throw new CompanyException("This coupon doesn't even exists, you Mexican (not a racist, shhh!)");
+        }
+        if (couponActions.getOneCoupon(couponID).getCompanyID() != companyID) {
+            throw new CompanyException("This is not your coupon, you mother fuc*er!");
+        }
         couponActions.deleteCoupon(couponID);
         purchaseActions.deleteAllPurchasesByCoupon(couponID);
     }
 
-    ArrayList<Coupon> getCompanyCoupons() throws SQLException, InterruptedException {
+    public ArrayList<Coupon> getCompanyCoupons() throws SQLException, InterruptedException {
         return couponActions.getAllCompanyCoupons(this.companyID);
     }
 
-    ArrayList<Coupon> getCompanyCouponsByCategory(Category category) throws SQLException, InterruptedException {
+    public ArrayList<Coupon> getCompanyCouponsByCategory(Category category) throws SQLException, InterruptedException {
         return couponActions.getCompanyCouponsByCategory(this.companyID, category);
     }
 
-    ArrayList<Coupon> getCompanyCouponsTillMaxPrice(double maxPrice) throws SQLException, InterruptedException {
+    public ArrayList<Coupon> getCompanyCouponsTillMaxPrice(double maxPrice) throws SQLException, InterruptedException {
         return couponActions.getCompanyCouponsTillMaxPrice(this.companyID, maxPrice);
     }
 

@@ -32,9 +32,4 @@ public class DateUtils {
     public static String getLocalDateTime() {
         return "[" + beautifyDateTime(LocalDateTime.now()) + "]";
     }
-
-    public static void main(String[] args) {
-        System.out.println(getLocalDateTime());
-    }
-
 }

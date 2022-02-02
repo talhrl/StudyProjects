@@ -18,6 +18,16 @@ public interface CompaniesDAO {
     boolean isCompanyExists(String email, String password) throws SQLException, InterruptedException;
 
     /**
+     * checks if company exists by ID
+     *
+     * @param companyID- company ID
+     * @return  if company exist
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    boolean isCompanyExistsByID(int companyID) throws SQLException, InterruptedException;
+
+    /**
      * Updating the company's data, only the company's email and / or password can be updated
      *
      * @param company company data

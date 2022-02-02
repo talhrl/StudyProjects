@@ -39,9 +39,9 @@ public class Coupon {
      * @param price       Coupon price
      * @param image       Coupon image URL
      */
-    public Coupon(int id, int companyID, Category category, String title, String description, Date startDate, Date endDate, int amount, double price, String image) {
-        this.id = id;
-        this.companyID = companyID;
+    public Coupon(Category category, String title, String description, Date startDate, Date endDate, int amount, double price, String image) {
+        this.id = 0;
+        this.companyID = 0;
         this.category = category;
         this.title = title;
         this.description = description;
@@ -240,17 +240,7 @@ public class Coupon {
 
     @Override
     public String toString() {
-        return "Coupon{" +
-                "id=" + id +
-                ", companyID=" + companyID +
-                ", category=" + category +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", amount=" + amount +
-                ", price=" + price +
-                ", image='" + image + '\'' +
-                '}';
+        return id + ", " + companyID + ", " + category + ", \"" + title + '\"' + ", " + description +
+                ", " + startDate + " - " + endDate + ", " + amount + "left, " + price + "$";
     }
 }
