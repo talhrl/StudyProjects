@@ -1,6 +1,5 @@
 package coupon_project.beans;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Coupon {
@@ -28,8 +27,6 @@ public class Coupon {
     /**
      * Constructor for coupon instance
      *
-     * @param id          Coupon ID
-     * @param companyID   Company ID
      * @param category    Coupon category
      * @param title       Coupon title (name)
      * @param description Coupon description

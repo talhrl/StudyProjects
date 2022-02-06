@@ -32,7 +32,7 @@ public class CustomerFacade extends ClientFacade {
         if (!couponActions.isCouponLeft(couponID)) {
             throw new PurchaseException("This coupon is no longer available");
         }
-        if (couponActions.isCouponValid(couponID)) {
+        if (!couponActions.isCouponValid(couponID)) {
             throw new PurchaseException("This coupon is no longer valid");
         }
         purchaseActions.addPurchase(customerID, couponID);

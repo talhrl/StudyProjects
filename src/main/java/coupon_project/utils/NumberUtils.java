@@ -8,8 +8,8 @@ public class NumberUtils {
     }
 
     public static double getPrice() {
-        final int MAX_PRICE = 90;
+        final int MAX_PRICE = 100;
         final int MIN_PRICE = 20;
-        return Math.random() * (MAX_PRICE - MIN_PRICE + 1) + MIN_PRICE;
+        return (int)(Math.random() * (MAX_PRICE*100 - MIN_PRICE*100 + 1) + MIN_PRICE*100)/100.00;
     }
 }

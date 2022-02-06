@@ -50,14 +50,14 @@ public class TablePrinter {
 
         Class<?> itemClass = list.get(index).getClass();
 
-        List<List<String>> columns = new ArrayList<List<String>>();
-        List<String> columnHeaders = new ArrayList<String>();
-        List<Integer> columnWidths = new ArrayList<Integer>();
+        List<List<String>> columns = new ArrayList<>();
+        List<String> columnHeaders = new ArrayList<>();
+        List<Integer> columnWidths = new ArrayList<>();
 
         Method[] methods = itemClass.getDeclaredMethods();
         for (Method method : methods) {
             String methodName = method.getName();
-            if (methodName.startsWith("get") == false) {
+            if (!methodName.startsWith("get")) {
                 continue;
             }
             methodName = methodName.substring(3);
@@ -114,7 +114,7 @@ public class TablePrinter {
     }
 
     private static List<String> getMethodStringValues(Method method, List<?> objects) {
-        List<String> values = new ArrayList<String>();
+        List<String> values = new ArrayList<>();
         if (Modifier.isStatic(method.getModifiers())) {
             return values;
         }
@@ -132,6 +132,7 @@ public class TablePrinter {
                     values.add(objectField.toString());
                 }
             } catch (InvocationTargetException | IllegalAccessException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
 

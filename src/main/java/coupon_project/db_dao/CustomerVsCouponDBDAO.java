@@ -19,15 +19,16 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
         params.put(2, couponID);
-        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total"  +
+        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total "  +
                 "FROM coupon_project.coupon_customers " +
                 "WHERE customer_id=? AND coupon_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
+        resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 
     @Override
-    public void addPurchase(int customerID, int couponID) throws SQLException, InterruptedException {
+    public void addPurchase(int customerID, int couponID) throws InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
         params2.put(2, customerID);
@@ -39,7 +40,7 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     }
 
     @Override
-    public void deletePurchase(int customerID, int couponID) throws SQLException, InterruptedException {
+    public void deletePurchase(int customerID, int couponID) throws InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
         params2.put(2, customerID);
@@ -50,7 +51,7 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     }
 
     @Override
-    public void deleteAllPurchasesByCoupon(int couponID) throws SQLException, InterruptedException {
+    public void deleteAllPurchasesByCoupon(int couponID) throws InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, couponID);
         String DELETE_PURCHASE = "DELETE " +
@@ -60,7 +61,7 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     }
 
     @Override
-    public void deleteAllPurchasesByCustomer(int customerID) throws SQLException, InterruptedException {
+    public void deleteAllPurchasesByCustomer(int customerID) throws InterruptedException {
         Map<Integer, Object> params2 = new HashMap<>();
         params2.put(1, customerID);
         String DELETE_PURCHASE = "DELETE " +
@@ -76,7 +77,7 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
         String GET_COUPON = "SELECT coupon_id " +
                 "FROM coupon_project.coupon_customers " +
                 "WHERE customer_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COUPON, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(GET_COUPON, params);
         ArrayList<Coupon> couponsList = new ArrayList<>();
         while (resultSet.next()) {
             CouponsDAO couponsDAO = Factory.getCouponDAO("sql");
@@ -89,7 +90,7 @@ public class CustomerVsCouponDBDAO implements CustomerVsCouponDAO {
     @Override
     public ArrayList<Coupon> getCustomerCouponsByCategory(int customerID, Category category) throws SQLException, InterruptedException {
         ArrayList<Coupon> couponArrayList = getAllCustomerCoupons(customerID);
-        couponArrayList.removeIf(coupon -> coupon.getCategory().equals(category));
+        couponArrayList.removeIf(coupon -> !coupon.getCategory().equals(category));
         return couponArrayList;
     }
 

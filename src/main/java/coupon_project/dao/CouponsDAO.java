@@ -45,13 +45,19 @@ public interface CouponsDAO {
 
     Coupon getOneCoupon(int couponID) throws SQLException, InterruptedException;
     /**
-     * A method that returns the list of all coupons in the system
+     * A method that decrease the amount by 1
      *
-     * @return list of all coupons in the system
      * @throws SQLException
      * @throws InterruptedException
      */
     void decreaseCouponAmount(int couponID) throws SQLException, InterruptedException;
+    /**
+     * A method that increase the amount by 1
+     *
+     * @throws SQLException
+     * @throws InterruptedException
+     */
+    void increaseCouponAmount(int couponID) throws SQLException, InterruptedException;
     /**
      * A method that shows all company coupons
      *

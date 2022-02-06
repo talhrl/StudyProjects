@@ -17,6 +17,10 @@ public class DateUtils {
         return localDateToSqlDate(LocalDate.now().plusDays((int) (Math.random() * 14) + 1));
     }
 
+    public static Date getExpiredDate() {
+        return localDateToSqlDate(LocalDate.now().minusDays(1));
+    }
+
     public static String beautifyLocalDate(LocalDate localDate) {
         return String.format("%02d/%02d/%04d",
                 localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());

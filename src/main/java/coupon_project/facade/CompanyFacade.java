@@ -33,17 +33,17 @@ public class CompanyFacade extends ClientFacade {
 
     public void updateCoupon(Coupon coupon) throws SQLException, InterruptedException, CompanyException {
         if (!couponActions.isCouponExistsByNameForCompany(coupon.getTitle(), companyID)) {
-            throw new CompanyException("This coupon doesn't even exist");
+            throw new CompanyException("This coupon doesn't exist");
         }
         couponActions.updateCoupon(coupon);
     }
 
     public void deleteCoupon(int couponID) throws SQLException, InterruptedException, CompanyException {
         if (!couponActions.isCouponExists(couponID)) {
-            throw new CompanyException("This coupon doesn't even exists, you Mexican (not a racist, shhh!)");
+            throw new CompanyException("This coupon doesn't exists)");
         }
         if (couponActions.getOneCoupon(couponID).getCompanyID() != companyID) {
-            throw new CompanyException("This is not your coupon, you mother fuc*er!");
+            throw new CompanyException("This is not your coupon");
         }
         couponActions.deleteCoupon(couponID);
         purchaseActions.deleteAllPurchasesByCoupon(couponID);

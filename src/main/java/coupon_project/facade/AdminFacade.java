@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class AdminFacade extends ClientFacade {
 
-    private final String ADMIN_USERNAME = "admin@admin.com";
+    private static final String ADMIN_USERNAME = "admin@admin.com";
 
-    private final String ADMIN_PASSWORD = "admin";
+    private static final String ADMIN_PASSWORD = "admin";
 
     public AdminFacade() {
     }
@@ -20,8 +20,8 @@ public class AdminFacade extends ClientFacade {
     /**
      * checks if the login credentials are correct.
      *
-     * @param email    Admin's email.
-     * @param password admin's password.
+     * @param email    Admins email.
+     * @param password admins password.
      * @return whether credentials are correct.
      */
     public boolean login(String email, String password) {
@@ -57,13 +57,12 @@ public class AdminFacade extends ClientFacade {
         if (!companyActions.isCompanyExistsByName(company.getName())) {
             throw new AdministrationException("Company doesn't exists");
         }
-        System.out.println("was here!"+ company);
         companyActions.updateCompany(company);
     }
 
     public void deleteCompany(int companyID) throws SQLException, InterruptedException, AdministrationException {
         if (!companyActions.isCompanyExistsByID(companyID)) {
-            throw new AdministrationException("This company doesn't exists");
+            throw new AdministrationException("Company doesn't exists");
         }
         ArrayList<Coupon> couponArrayList = couponActions.getAllCompanyCoupons(companyID);
         for (Coupon coupon : couponArrayList) {
@@ -92,7 +91,7 @@ public class AdminFacade extends ClientFacade {
     }
 
     public void updateCustomer(Customer customer) throws SQLException, InterruptedException, AdministrationException {
-        if (!customerActions.isCustomerExistsByID(customer.getId())) {
+        if (!customerActions.isCustomerExistsByEmail(customer.getEmail())) {
             throw new AdministrationException("This customer doesn't exists");
         }
         customerActions.updateCustomer(customer);
@@ -103,6 +102,10 @@ public class AdminFacade extends ClientFacade {
             throw new AdministrationException("This customer doesn't exists");
         }
         customerActions.deleteCustomer(customerID);
+        ArrayList<Coupon> coupons = purchaseActions.getAllCustomerCoupons(customerID);
+        for (Coupon coupon : coupons) {
+            couponActions.increaseCouponAmount(coupon.getId());
+        }
         purchaseActions.deleteAllPurchasesByCustomer(customerID);
     }
 

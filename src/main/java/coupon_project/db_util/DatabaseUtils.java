@@ -1,12 +1,9 @@
 package coupon_project.db_util;
 
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.*;
 import java.util.Map;
 
 public class DatabaseUtils {
-    static int id = 0;
     // Creating a private instance of connection
     private static Connection connection;
 
@@ -17,13 +14,13 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static void runQuery(String query) throws InterruptedException, SQLException {
-        int temp_id = id++;
-        System.out.println(""+temp_id+":"+query);
+        //System.out.println("attempting to prepare statement");
         connection = ConnectionPool.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
+        //System.out.println("attempting to execute statement:"+ statement);
         statement.execute();
+        //System.out.println("statement executed!");
         ConnectionPool.getInstance().restoreConnection(connection);
-        System.out.println("query number " +temp_id+" done");
     }
 
     /**
@@ -34,10 +31,11 @@ public class DatabaseUtils {
      * @throws InterruptedException if thread is interrupted.
      */
     public static void runQuery(String query, Map<Integer, Object> params) throws InterruptedException {
-        int temp_id = id++;
         try {
+            //System.out.println("attempting to prepare statement.");
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
+            //System.out.println("inserting data to sql command");
             params.forEach((key, value) -> {
                 try {
                     if (value instanceof Integer) {
@@ -54,16 +52,17 @@ public class DatabaseUtils {
                         statement.setFloat(key, (Float) value);
                     }
                 } catch (SQLException err) {
+                    System.out.println("");
                     System.out.println(err.getMessage());
                 }
             });
-            System.out.println(""+temp_id+":"+statement);
+            //System.out.println("attempting to execute statement"+statement);
             statement.execute();
+            //System.out.println("statement executed");
         } catch (SQLException err) {
-            System.out.println(temp_id+err.getMessage());
+            System.out.println(err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
-            System.out.println("query number " +temp_id+" done");
         }
     }
 
@@ -75,19 +74,19 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static ResultSet runQueryForResult(String query) throws InterruptedException {
-        int temp_id = id++;
-        System.out.println(""+temp_id+":"+query);
         ResultSet resultSet = null;
         try {
+            //System.out.println("attempting to prepare statement.");
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
+            //System.out.println("attempting to execute statement"+statement);
             resultSet = statement.executeQuery();
+            //System.out.println("statement executed!");
         } catch (SQLException err) {
-            System.out.println(temp_id+err.getMessage());
+            System.out.println(err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
         }
-        System.out.println("query number " +temp_id+" done");
         return resultSet;
     }
 
@@ -100,11 +99,12 @@ public class DatabaseUtils {
      * @throws InterruptedException
      */
     public static ResultSet runQueryForResult(String query, Map<Integer, Object> params) throws InterruptedException {
-        int temp_id = id++;
         ResultSet resultset = null;
         try {
+            //System.out.println("attempting to prepare statement");
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
+            //System.out.println("inserting values to sql statement.");
             params.forEach((key, value) -> {
                 try {
                     if (value instanceof Integer) {
@@ -125,14 +125,14 @@ public class DatabaseUtils {
                 }
 
             });
-            System.out.println(temp_id+":"+statement);
+            //System.out.println("attempting to execute statement"+statement);
             resultset =  statement.executeQuery();
+            //System.out.println("statement executed!");
         } catch (SQLException err) {
-            System.out.println(temp_id+err.getMessage());
+            System.out.println(err.getMessage());
         } finally {
             ConnectionPool.getInstance().restoreConnection(connection);
         }
-        System.out.println("query number " +temp_id+" done");
         return resultset;
     }
 }

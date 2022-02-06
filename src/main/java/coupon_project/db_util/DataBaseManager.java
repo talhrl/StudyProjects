@@ -1,6 +1,10 @@
 package coupon_project.db_util;
 
+import coupon_project.beans.Category;
+
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBaseManager {
 
@@ -136,6 +140,12 @@ public class DataBaseManager {
 
     public static void createCategoryTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_CATEGORY_TABLE);
+        for (Category category : Category.values()) {
+            Map<Integer, Object> params = new HashMap<>();
+            params.put(1, category.ordinal()+1);
+            params.put(2, category.toString());
+            DatabaseUtils.runQuery("INSERT INTO coupon_project.categories (`id`,`name`) VALUES (?,?)", params);
+        }
     }
 
     public static void dropCategoryTable() throws SQLException, InterruptedException {

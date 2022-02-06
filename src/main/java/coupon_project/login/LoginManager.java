@@ -48,21 +48,21 @@ public class LoginManager {
                 if (!adminFacade.login(email, password)) {
                     throw new LoginException("Invalid email or password");
                 }
-                System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
+                //System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
                 return adminFacade;
             case COMPANY:
                 ClientFacade companyFacade = new CompanyFacade();
                 if (!companyFacade.login(email, password)) {
                     throw new LoginException("Invalid email or password");
                 }
-                System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
+                //System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
                 return companyFacade;
             case CUSTOMER:
                 ClientFacade customerFacade = new CustomerFacade();
                 if (!customerFacade.login(email, password)) {
                     throw new LoginException("Invalid email or password");
                 }
-                System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
+                //System.out.println(DateUtils.getLocalDateTime() + email + " was logged");
                 return customerFacade;
             default:
                 return null;

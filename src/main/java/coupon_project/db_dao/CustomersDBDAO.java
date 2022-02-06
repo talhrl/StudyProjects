@@ -21,7 +21,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String CHECK_CUSTOMER = "SELECT COUNT(*) AS total " +
                 "FROM coupon_project.customers " +
                 "WHERE email=? AND password=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
         resultSet.next();
         return resultSet.getInt("total") > 0;
     }
@@ -33,13 +33,13 @@ public class CustomersDBDAO implements CustomersDAO {
         String IS_COUPON_EXISTS = "SELECT COUNT(*) AS total " +
                 "FROM coupon_project.customers " +
                 "WHERE id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(IS_COUPON_EXISTS, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(IS_COUPON_EXISTS, params);
         resultSet.next();
         return resultSet.getInt("total") > 0;
     }
 
     @Override
-    public void addCustomer(Customer customer) throws SQLException, InterruptedException {
+    public void addCustomer(Customer customer) throws InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customer.getEmail());
         params.put(2, customer.getPassword());
@@ -54,7 +54,7 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void updateCustomer(Customer customer) throws SQLException, InterruptedException {
+    public void updateCustomer(Customer customer) throws InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customer.getFirstName());
         params.put(2, customer.getLastName());
@@ -68,7 +68,7 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void deleteCustomer(int customerID) throws SQLException, InterruptedException {
+    public void deleteCustomer(int customerID) throws InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, customerID);
         String DELETE_CUSTOMER = "DELETE " +
@@ -81,7 +81,7 @@ public class CustomersDBDAO implements CustomersDAO {
     public ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException {
         String GET_CUSTOMERS = "SELECT * " +
                 "FROM coupon_project.customers";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMERS);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(GET_CUSTOMERS);
         ArrayList<Customer> customerList = new ArrayList<>();
         while (resultSet.next()) {
             Customer customer = new Customer();
@@ -104,7 +104,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String GET_CUSTOMER = "SELECT * " +
                 "FROM coupon_project.customers " +
                 "WHERE id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
         resultSet.next();
         customer.setEmail(resultSet.getString("email"));
         customer.setId(resultSet.getInt("id"));
@@ -123,7 +123,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total " +
                 "FROM coupon_project.customers " +
                 "WHERE customer_id=? AND coupon_id=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
         resultSet.next();
         return resultSet.getInt("total") > 0;
     }
@@ -135,7 +135,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String GET_COMPANY = "SELECT id " +
                 "FROM coupon_project.customers " +
                 "WHERE email=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(GET_COMPANY, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(GET_COMPANY, params);
         resultSet.next();
         return resultSet.getInt("id");
     }
@@ -147,7 +147,7 @@ public class CustomersDBDAO implements CustomersDAO {
         String CHECK_CUSTOMER = "SELECT COUNT(*) AS total " +
                 "FROM coupon_project.customers " +
                 "WHERE email=?";
-        ResultSet resultSet = (ResultSet) DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
+        ResultSet resultSet = DatabaseUtils.runQueryForResult(CHECK_CUSTOMER, params);
         resultSet.next();
         return resultSet.getInt("total") > 0;
     }

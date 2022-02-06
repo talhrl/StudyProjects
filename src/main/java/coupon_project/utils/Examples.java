@@ -5,9 +5,6 @@ import coupon_project.beans.Company;
 import coupon_project.beans.Coupon;
 import coupon_project.beans.Customer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Examples {
     public final static Company Roofmart = new Company("Roofmart", "roof@mart.com", "groceries");
     public final static Company Pear = new Company("Pear", "pear@pear.com", "better_than_apple");
