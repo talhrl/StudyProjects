@@ -40,18 +40,17 @@ public class CouponsDBDAO implements CouponsDAO {
     public void updateCoupon(Coupon coupon) throws InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, coupon.getCategory().ordinal() + 1);
-        params.put(2, coupon.getTitle());
-        params.put(3, coupon.getDescription());
-        params.put(4, coupon.getStartDate());
-        params.put(5, coupon.getEndDate());
-        params.put(6, coupon.getAmount());
-        params.put(7, coupon.getPrice());
-        params.put(8, coupon.getImage());
-        params.put(9, coupon.getId());
+        params.put(2, coupon.getDescription());
+        params.put(3, coupon.getStartDate());
+        params.put(4, coupon.getEndDate());
+        params.put(5, coupon.getAmount());
+        params.put(6, coupon.getPrice());
+        params.put(7, coupon.getImage());
+        params.put(8, coupon.getTitle());
         String UPDATE_COUPON = "UPDATE " +
                 "coupon_project.coupons " +
-                "SET category_id=?, title=?, description=?, start_date=?, end_date=?, amount=?, price=?, image=? " +
-                "WHERE id=?";
+                "SET category_id=?, description=?, start_date=?, end_date=?, amount=?, price=?, image=? " +
+                "WHERE title=?";
         DatabaseUtils.runQuery(UPDATE_COUPON, params);
     }
 
@@ -241,34 +240,6 @@ public class CouponsDBDAO implements CouponsDAO {
                 "SET amount = amount+1 " +
                 "WHERE id=?";
         DatabaseUtils.runQuery(RAISE_COUPON_AMOUNT, params);
-    }
-
-    @Override
-    public void deleteCouponPurchase(int customerID, int couponID) throws InterruptedException {
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerID);
-        params.put(2, couponID);
-        String DELETE_COUPON_FOR_CUSTOMER = "DELETE " +
-                "FROM coupon_project.coupons " +
-                "WHERE customer_id=? AND coupon_id=?";
-        DatabaseUtils.runQuery(DELETE_COUPON_FOR_CUSTOMER, params);
-    }
-
-    @Override
-    public ArrayList<Customer> getAllCouponCustomers(int couponID) throws SQLException, InterruptedException {
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, couponID);
-        String GET_CUSTOMER = "SELECT customer_id " +
-                "FROM coupon_project.coupons " +
-                "WHERE coupon_id=?";
-        ResultSet resultSet = DatabaseUtils.runQueryForResult(GET_CUSTOMER, params);
-        ArrayList<Customer> customerList = new ArrayList<>();
-        CustomersDBDAO customersDBDAO = new CustomersDBDAO();
-        while (resultSet.next()) {
-            Customer customer = customersDBDAO.getOneCustomer(resultSet.getInt("customer_id"));
-            customerList.add(customer);
-        }
-        return customerList;
     }
 
     @Override
