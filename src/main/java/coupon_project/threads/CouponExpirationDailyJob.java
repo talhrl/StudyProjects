@@ -14,9 +14,9 @@ public class CouponExpirationDailyJob implements Runnable {
     // Boolean field that is used to define if the thread should keep running
     private boolean isContinue;
     // Coupon DAO instance used to access some database actions
-    private final CouponsDAO couponsDAO;
+    private final CouponsDAO couponActions;
     // CustomerVsCoupon DAO instance used to access some database actions
-    private final CustomerVsCouponDAO customerVsCouponDAO;
+    private final CustomerVsCouponDAO purchaseActions;
 
     /**
      * Constructor to create an instance of CouponExpirationDailyJob in order to run it
@@ -25,9 +25,9 @@ public class CouponExpirationDailyJob implements Runnable {
      */
     public CouponExpirationDailyJob(String DB) {
         // Creates the CouponDBDAO instance
-        this.couponsDAO = Factory.getCouponDAO(DB);
+        this.couponActions = Factory.getCouponDAO(DB);
         // Creates the CustomerVsCouponDBDAO instance
-        this.customerVsCouponDAO = Factory.getCustomerVsCouponDAO(DB);
+        this.purchaseActions = Factory.getCustomerVsCouponDAO(DB);
         // Initializing isContinue field to true
         this.isContinue = true;
     }
@@ -43,13 +43,13 @@ public class CouponExpirationDailyJob implements Runnable {
             // Try and Catch to catch the InterruptedException or SQLException
             try {
                 // For every coupon on the table we check is expiration date (=end date)
-                for (Coupon coupon : couponsDAO.getAllCoupons()) {
+                for (Coupon coupon : couponActions.getAllCoupons()) {
                     // If the coupon is no longer valid we delete it
-                    if (!couponsDAO.isCouponValid(coupon.getId())) {
+                    if (!couponActions.isCouponValid(coupon.getId())) {
                         // So we delete all of his purchases
-                        customerVsCouponDAO.deleteAllPurchasesByCoupon(coupon.getId());
+                        purchaseActions.deleteAllPurchasesByCoupon(coupon.getId());
                         // And finally delete it
-                        this.couponsDAO.deleteCoupon(coupon.getId());
+                        this.couponActions.deleteCoupon(coupon.getId());
                     }
                 }
                 // After checking all the coupons, the thread sleeps for 24 hours

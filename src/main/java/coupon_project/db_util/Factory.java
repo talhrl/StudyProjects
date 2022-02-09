@@ -9,42 +9,87 @@ import coupon_project.db_dao.CouponsDBDAO;
 import coupon_project.db_dao.CustomerVsCouponDBDAO;
 import coupon_project.db_dao.CustomersDBDAO;
 
+/**
+ * Factory class used to manage the DBDAO used, in case of using more than one database
+ */
 public class Factory {
-    public static CustomerVsCouponDAO getCustomerVsCouponDAO(String DB){
-        CustomerVsCouponDAO myCustomerVsCouponDAO = null;
-        switch (DB){
+    /**
+     * Return the used database CustomerVsCouponDBDAO
+     *
+     * @param DB used database
+     * @return CustomerVsCouponDBDAO
+     */
+    public static CustomerVsCouponDAO getCustomerVsCouponDAO(String DB) {
+        // We use switch case (easy to add databases)
+        switch (DB) {
+            // In case of mySQL
             case "sql":
-                myCustomerVsCouponDAO =new CustomerVsCouponDBDAO();
+                // Return mySQL CustomerVsCouponDBDAO
+                return new CustomerVsCouponDBDAO();
+            // In case of other database (doesn't exist) it just returns null
             default:
-                return myCustomerVsCouponDAO;
+                // Return null
+                return null;
         }
     }
 
-    public static CouponsDAO getCouponDAO(String DB){
-        CouponsDAO myCouponsDAO = null;
-        switch (DB){
+    /**
+     * Return the used database CouponsDBDAO
+     *
+     * @param DB used database
+     * @return CouponDBDAO
+     */
+    public static CouponsDAO getCouponDAO(String DB) {
+        // We use switch case (easy to add databases)
+        switch (DB) {
+            // In case of mySQL
             case "sql":
-                myCouponsDAO =new CouponsDBDAO();
+                // Return mySQL CouponsDBDAO
+                return new CouponsDBDAO();
+            // In case of other database (doesn't exist) it just returns null
             default:
-                return myCouponsDAO;
+                // Return null
+                return null;
         }
     }
+
+    /**
+     * Return the used database CompaniesDBDAO
+     *
+     * @param DB used database
+     * @return CompaniesDBDAO
+     */
     public static CompaniesDAO getCompanyDAO(String DB) {
-        CompaniesDAO myCompanyDAO = null;
+        // We use switch case (easy to add databases)
         switch (DB) {
+            // In case of mySQL
             case "sql":
-                myCompanyDAO = new CompaniesDBDAO();
+                // Return mySQL CompaniesDBDAO
+                return new CompaniesDBDAO();
+            // In case of other database (doesn't exist) it just returns null
             default:
-                return myCompanyDAO;
+                // Return null
+                return null;
         }
     }
+
+    /**
+     * Return the used database CustomersDBDAO
+     *
+     * @param DB used database
+     * @return CustomersDBDAO
+     */
     public static CustomersDAO getCustomerDAO(String DB) {
-        CustomersDAO myCustomerDAO = null;
+        // We use switch case (easy to add databases)
         switch (DB) {
+            // In case of mySQL
             case "sql":
-                myCustomerDAO = new CustomersDBDAO();
+                // Return mySQL CustomersDBDAO
+                return new CustomersDBDAO();
+            // In case of other database (doesn't exist) it just returns null
             default:
-                return myCustomerDAO;
+                // Return null
+                return null;
         }
     }
-    }
+}

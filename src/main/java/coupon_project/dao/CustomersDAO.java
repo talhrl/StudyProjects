@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 public interface CustomersDAO {
     /**
-     * checks if specific customer exist in the system
+     * checks if specific customer exist in the system by email and password
      *
      * @param email-   customer email
      * @param password - customer password
      * @return if company exists
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     boolean isCustomerExists(String email, String password) throws SQLException, InterruptedException;
 
@@ -23,7 +23,7 @@ public interface CustomersDAO {
      * @param customerID- customer ID
      * @return if company exists
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     boolean isCustomerExistsByID(int customerID) throws SQLException, InterruptedException;
 
@@ -32,7 +32,7 @@ public interface CustomersDAO {
      *
      * @param customer data
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     void addCustomer(Customer customer) throws SQLException, InterruptedException;
 
@@ -41,7 +41,7 @@ public interface CustomersDAO {
      *
      * @param customer data
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     void updateCustomer(Customer customer) throws SQLException, InterruptedException;
 
@@ -50,7 +50,7 @@ public interface CustomersDAO {
      *
      * @param customerID
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     void deleteCustomer(int customerID) throws SQLException, InterruptedException;
 
@@ -59,7 +59,7 @@ public interface CustomersDAO {
      *
      * @return list of all customers
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException;
 
@@ -69,7 +69,7 @@ public interface CustomersDAO {
      * @param customerID
      * @return customer data
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     Customer getOneCustomer(int customerID) throws SQLException, InterruptedException;
 
@@ -79,7 +79,7 @@ public interface CustomersDAO {
      * @param email
      * @return customer id
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     int getCustomerIDbyEmail(String email) throws SQLException, InterruptedException;
 
@@ -89,7 +89,7 @@ public interface CustomersDAO {
      * @param email
      * @return if customer exist in the system
      * @throws SQLException         when SQL throw SQLException
-     * @throws InterruptedException when SQL throw InterruptedException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     boolean isCustomerExistsByEmail(String email) throws SQLException, InterruptedException;
 }

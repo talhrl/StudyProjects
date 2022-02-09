@@ -17,9 +17,6 @@ public class DataBaseManager {
     // mySQL password
     public static final String USER_PASS = "12345678";
 
-    // Number of connections
-    public static final int MAX_CONNECTION = 10;
-
     // SQL command for creating database "coupon_project"
     public static final String CREATE_DB = "CREATE DATABASE IF NOT EXISTS coupon_project";
 
@@ -121,8 +118,8 @@ public class DataBaseManager {
     /**
      * A function for creating database "coupon_project"
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createDataBase() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_DB);
@@ -131,23 +128,35 @@ public class DataBaseManager {
     /**
      * A function for deleting database "coupon_project"
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropDataBase() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_DB);
     }
 
+    /**
+     * A function for creating category table
+     *
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
+     */
     public static void createCategoryTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_CATEGORY_TABLE);
         for (Category category : Category.values()) {
             Map<Integer, Object> params = new HashMap<>();
-            params.put(1, category.ordinal()+1);
+            params.put(1, category.ordinal() + 1);
             params.put(2, category.toString());
             DatabaseUtils.runQuery("INSERT INTO coupon_project.categories (`id`,`name`) VALUES (?,?)", params);
         }
     }
 
+    /**
+     * A function for deleting category table
+     *
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
+     */
     public static void dropCategoryTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_CATEGORY_TABLE);
     }
@@ -155,8 +164,8 @@ public class DataBaseManager {
     /**
      * A function for creating company table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createCompanyTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COMPANY_TABLE);
@@ -165,8 +174,8 @@ public class DataBaseManager {
     /**
      * A function for deleting company table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropCompanyTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_COMPANY_TABLE);
@@ -175,8 +184,8 @@ public class DataBaseManager {
     /**
      * A function for creating customer table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_CUSTOMER_TABLE);
@@ -185,8 +194,8 @@ public class DataBaseManager {
     /**
      * A function for deleting customer table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_CUSTOMER_TABLE);
@@ -195,8 +204,8 @@ public class DataBaseManager {
     /**
      * A function for creating coupon table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createCouponTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COUPONS_TABLE);
@@ -205,8 +214,8 @@ public class DataBaseManager {
     /**
      * A function for deleting coupon table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropCouponTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_COUPONS_TABLE);
@@ -215,8 +224,8 @@ public class DataBaseManager {
     /**
      * A function for creating Coupon VS Customer table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createCouponVSCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(CREATE_COUPONS_CUSTOMER_TABLE);
@@ -225,8 +234,8 @@ public class DataBaseManager {
     /**
      * A function for deleting Coupon VS Customer table
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropCouponVSCustomerTable() throws SQLException, InterruptedException {
         DatabaseUtils.runQuery(DROP_COUPONS_CUSTOMER_TABLE);
@@ -235,8 +244,8 @@ public class DataBaseManager {
     /**
      * A function for creating the whole project (database, company table, customer table and coupon table)
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void createCouponsProjectDB() throws SQLException, InterruptedException {
         createDataBase();
@@ -250,8 +259,8 @@ public class DataBaseManager {
     /**
      * A function for creating the whole project (database, company table, customer table and coupon table)
      *
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     public static void dropCouponsProjectDB() throws SQLException, InterruptedException {
         dropDataBase();
