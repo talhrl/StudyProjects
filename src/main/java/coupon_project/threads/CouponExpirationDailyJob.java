@@ -1,7 +1,6 @@
 package coupon_project.threads;
 
 import coupon_project.beans.Coupon;
-import coupon_project.beans.Customer;
 import coupon_project.dao.CouponsDAO;
 import coupon_project.dao.CustomerVsCouponDAO;
 import coupon_project.db_util.Factory;
@@ -9,51 +8,65 @@ import coupon_project.db_util.Factory;
 import java.sql.SQLException;
 
 /**
- * this is a daily job that erases all coupons which had their expiration date surpass the current date.
+ * Thread class that is used to erase every expired coupon from the database
  */
 public class CouponExpirationDailyJob implements Runnable {
-    //todo: activate the thread at the beginning of the program, terminate at the end!!!!
-    private boolean quit = false;
+    // Boolean field that is used to define if the thread should keep running
+    private boolean isContinue;
+    // Coupon DAO instance used to access some database actions
     private final CouponsDAO couponsDAO;
+    // CustomerVsCoupon DAO instance used to access some database actions
     private final CustomerVsCouponDAO customerVsCouponDAO;
 
     /**
-     * if run quits legally when finished, and quit is true
-     * if run quits illegally, quit will stay false.
-     * thread waits until woken by another util thread that keeps tabs on the time.
+     * Constructor to create an instance of CouponExpirationDailyJob in order to run it
+     *
+     * @param DB current used database (="sql")
+     */
+    public CouponExpirationDailyJob(String DB) {
+        // Creates the CouponDBDAO instance
+        this.couponsDAO = Factory.getCouponDAO(DB);
+        // Creates the CustomerVsCouponDBDAO instance
+        this.customerVsCouponDAO = Factory.getCustomerVsCouponDAO(DB);
+        // Initializing isContinue field to true
+        this.isContinue = true;
+    }
+
+    /**
+     * Run function that implemented from the Runnable interface. The main function of the thread, begin running when
+     * called "start" and stops running when catching InterruptedException and turning isContinue field false
      */
     @Override
     public void run() {
-        while (!quit) {
+        // First, while isContinue field is true, the thread should continue running
+        while (isContinue) {
+            // Try and Catch to catch the InterruptedException or SQLException
             try {
+                // For every coupon on the table we check is expiration date (=end date)
                 for (Coupon coupon : couponsDAO.getAllCoupons()) {
+                    // If the coupon is no longer valid we delete it
                     if (!couponsDAO.isCouponValid(coupon.getId())) {
+                        // So we delete all of his purchases
                         customerVsCouponDAO.deleteAllPurchasesByCoupon(coupon.getId());
+                        // And finally delete it
                         this.couponsDAO.deleteCoupon(coupon.getId());
                     }
                 }
-                //             milliseconds, seconds, minutes, hours
-                Thread.sleep(1000      *  60  *    60  *  24);
+                // After checking all the coupons, the thread sleeps for 24 hours
+                Thread.sleep(1000 * 60 * 60 * 24);
+                //            milliseconds, seconds, minutes, hours
             } catch (InterruptedException | SQLException e) {
+                // If the thread catches some problem, it stops itself using the stop function
                 stop();
             }
         }
     }
 
     /**
-     * calling this function will terminate the thread legally.
+     * changing the isContinue field to false, so the thread won't keep running
      */
     public void stop() {
-        this.quit = true;
-    }
-
-    /**
-     * constructor.
-     *
-     * @param DB name of the database you intend to work with.
-     */
-    public CouponExpirationDailyJob(String DB) {
-        this.couponsDAO = Factory.getCouponDAO(DB);
-        this.customerVsCouponDAO = Factory.getCustomerVsCouponDAO(DB);
+        // Changes isContinue field to false
+        this.isContinue = false;
     }
 }

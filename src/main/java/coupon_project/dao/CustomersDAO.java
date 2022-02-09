@@ -9,11 +9,11 @@ public interface CustomersDAO {
     /**
      * checks if specific customer exist in the system
      *
-     * @param email- customer email
+     * @param email-   customer email
      * @param password - customer password
      * @return if company exists
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     boolean isCustomerExists(String email, String password) throws SQLException, InterruptedException;
 
@@ -22,8 +22,8 @@ public interface CustomersDAO {
      *
      * @param customerID- customer ID
      * @return if company exists
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     boolean isCustomerExistsByID(int customerID) throws SQLException, InterruptedException;
 
@@ -31,8 +31,8 @@ public interface CustomersDAO {
      * add new customer to the system
      *
      * @param customer data
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     void addCustomer(Customer customer) throws SQLException, InterruptedException;
 
@@ -40,8 +40,8 @@ public interface CustomersDAO {
      * a method update customer existing data
      *
      * @param customer data
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     void updateCustomer(Customer customer) throws SQLException, InterruptedException;
 
@@ -49,8 +49,8 @@ public interface CustomersDAO {
      * a method delete customer from the system by id
      *
      * @param customerID
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     void deleteCustomer(int customerID) throws SQLException, InterruptedException;
 
@@ -58,8 +58,8 @@ public interface CustomersDAO {
      * a methode that shows all customer in the system
      *
      * @return list of all customers
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     ArrayList<Customer> getAllCustomers() throws SQLException, InterruptedException;
 
@@ -68,29 +68,18 @@ public interface CustomersDAO {
      *
      * @param customerID
      * @return customer data
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     Customer getOneCustomer(int customerID) throws SQLException, InterruptedException;
 
     /**
-     * a method that checks if customer have coupon
-     *
-     * @param customerID
-     * @param couponID
-     * @return if customer have specific coupon
-     * @throws SQLException
-     * @throws InterruptedException
-     */
-    boolean isCustomerHaveCoupon(int customerID, int couponID) throws SQLException, InterruptedException;
-
-    /**
-     *  a method that get customer id by customer email
+     * a method that get customer id by customer email
      *
      * @param email
      * @return customer id
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     int getCustomerIDbyEmail(String email) throws SQLException, InterruptedException;
 
@@ -99,8 +88,8 @@ public interface CustomersDAO {
      *
      * @param email
      * @return if customer exist in the system
-     * @throws SQLException
-     * @throws InterruptedException
+     * @throws SQLException         when SQL throw SQLException
+     * @throws InterruptedException when SQL throw InterruptedException
      */
     boolean isCustomerExistsByEmail(String email) throws SQLException, InterruptedException;
 }

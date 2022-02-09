@@ -116,19 +116,6 @@ public class CustomersDBDAO implements CustomersDAO {
     }
 
     @Override
-    public boolean isCustomerHaveCoupon(int customerID, int couponID) throws SQLException, InterruptedException {
-        Map<Integer, Object> params = new HashMap<>();
-        params.put(1, customerID);
-        params.put(2, couponID);
-        String CHECK_COUPON_FOR_CUSTOMER = "SELECT COUNT(*) AS total " +
-                "FROM coupon_project.customers " +
-                "WHERE customer_id=? AND coupon_id=?";
-        ResultSet resultSet = DatabaseUtils.runQueryForResult(CHECK_COUPON_FOR_CUSTOMER, params);
-        resultSet.next();
-        return resultSet.getInt("total") > 0;
-    }
-
-    @Override
     public int getCustomerIDbyEmail(String email) throws SQLException, InterruptedException {
         Map<Integer, Object> params = new HashMap<>();
         params.put(1, email);
