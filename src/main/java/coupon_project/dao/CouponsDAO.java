@@ -57,6 +57,7 @@ public interface CouponsDAO {
     /**
      * A method that decrease the amount by 1
      *
+     * @param couponID Coupon's id
      * @throws SQLException         when SQL throws SQLException
      * @throws InterruptedException when DataBaseUtils throws InterruptedException
      */
@@ -65,6 +66,7 @@ public interface CouponsDAO {
     /**
      * A method that increase the amount by 1
      *
+     * @param couponID Coupon's id.
      * @throws SQLException         when SQL throws SQLException
      * @throws InterruptedException when DataBaseUtils throws InterruptedException
      */
@@ -73,7 +75,7 @@ public interface CouponsDAO {
     /**
      * A method that shows all company coupons
      *
-     * @param companyID
+     * @param companyID company's id.
      * @return coupons list
      * @throws SQLException         when SQL throws SQLException
      * @throws InterruptedException when DataBaseUtils throws InterruptedException
@@ -83,7 +85,7 @@ public interface CouponsDAO {
     /**
      * method that shows company coupons by specific category
      *
-     * @param companyID
+     * @param companyID - company's id.
      * @param category  of coupon
      * @return coupons list from the chosen category
      * @throws SQLException         when SQL throws SQLException
@@ -94,7 +96,7 @@ public interface CouponsDAO {
     /**
      * method that shows company coupons till max price
      *
-     * @param companyID
+     * @param companyID- company's id.
      * @param maxPrice- max price of coupons list
      * @return coupons list till max price
      * @throws SQLException         when SQL throws SQLException
@@ -135,7 +137,7 @@ public interface CouponsDAO {
     /**
      * method that delete all company coupons
      *
-     * @param companyID
+     * @param companyID             company's id
      * @throws SQLException         when SQL throws SQLException
      * @throws InterruptedException when DataBaseUtils throws InterruptedException
      */
@@ -145,7 +147,7 @@ public interface CouponsDAO {
      * checks if coupon name already exist in specific company
      *
      * @param name-     coupon name
-     * @param companyID
+     * @param companyID  company's id.
      * @return if coupon by this name exist in the company
      * @throws SQLException         when SQL throws SQLException
      * @throws InterruptedException when DataBaseUtils throws InterruptedException

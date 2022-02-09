@@ -1,8 +1,11 @@
 package coupon_project.utils;
 
+
+
 /**
  * Art class for banners so the tester will be pretty pretty
  */
+
 public class ArtUtils {
     // Administrator banner
     public static final String ADMIN_BANNER = " █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗\n" +

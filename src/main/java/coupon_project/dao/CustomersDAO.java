@@ -48,7 +48,7 @@ public interface CustomersDAO {
     /**
      * a method delete customer from the system by id
      *
-     * @param customerID
+     * @param customerID customer's id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
@@ -66,7 +66,7 @@ public interface CustomersDAO {
     /**
      * a method shows specific customer data by id
      *
-     * @param customerID
+     * @param customerID customer's id
      * @return customer data
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
@@ -76,7 +76,7 @@ public interface CustomersDAO {
     /**
      * a method that get customer id by customer email
      *
-     * @param email
+     * @param email customer's email.
      * @return customer id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
@@ -86,7 +86,7 @@ public interface CustomersDAO {
     /**
      * a method that checks if customer exist in the system by customer email
      *
-     * @param email
+     * @param email customer's email
      * @return if customer exist in the system
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException

@@ -63,6 +63,7 @@ public class AdminFacade extends ClientFacade {
      * @param company Company object.
      * @throws SQLException         when sql raises SQLException.
      * @throws InterruptedException when sql raises InterruptedException.
+     * @throws AdministrationException when attempting to update a non-existent company.
      */
     public void updateCompany(Company company) throws SQLException, InterruptedException, AdministrationException {
         // First, if the company name doesn't exist (=the company doesn't exist), you can't update

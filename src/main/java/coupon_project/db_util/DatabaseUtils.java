@@ -12,6 +12,7 @@ public class DatabaseUtils {
      *
      * @param query Command (mySQL language)
      * @throws InterruptedException when the thread is interrupted
+     * @throws SQLException when SQL raises an exception while executing a statement.
      */
     public static void runQuery(String query) throws InterruptedException, SQLException {
         // First, we get a connection from the connection pool

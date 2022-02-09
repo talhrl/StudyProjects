@@ -20,7 +20,7 @@ public class ConnectionPool {
     /**
      * Blank constructor that open the connections. Private constructor indicates singleton
      *
-     * @throws SQLException
+     * @throws SQLException if sql raises an exception.
      */
     private ConnectionPool() throws SQLException {
         //open all connections
@@ -59,7 +59,7 @@ public class ConnectionPool {
      * Function for getting one connection from the stack
      *
      * @return Connection (the top one)
-     * @throws InterruptedException
+     * @throws InterruptedException if a thread is interrupted while connectionpool is waiting for a notification.
      */
     public Connection getConnection() throws InterruptedException {
         // First, we lock the connections to prevent more than one stack-action at a time
@@ -107,7 +107,7 @@ public class ConnectionPool {
     /**
      * Function for closing the connections, prevent the connections from getting out and waiting for all of them to be back
      *
-     * @throws InterruptedException
+     * @throws InterruptedException if thread is interrupted.
      */
     public void closeAllConnection() throws InterruptedException {
         // First, we lock the connections to prevent anyone from taking a connection

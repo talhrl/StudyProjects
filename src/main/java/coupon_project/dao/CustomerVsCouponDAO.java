@@ -10,19 +10,19 @@ public interface CustomerVsCouponDAO {
     /**
      * a method that checks if purchase exist in the system
      *
-     * @param customerID
-     * @param couponID
-     * @return if exist
+     * @param customerID customer's id
+     * @param couponID coupon's id
+     * @return if a specified customer purchased a specified coupon.
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
     boolean isPurchaseExists(int customerID, int couponID) throws SQLException, InterruptedException;
 
     /**
-     * a method that add new purchase to the system
+     * a method that adds a new purchase to the system
      *
-     * @param customerID
-     * @param couponID
+     * @param customerID customer's id
+     * @param couponID coupon's id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
@@ -31,8 +31,8 @@ public interface CustomerVsCouponDAO {
     /**
      * a method that delete purchase from system
      *
-     * @param customerID
-     * @param couponID
+     * @param customerID customer's id
+     * @param couponID coupon's id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
@@ -41,7 +41,7 @@ public interface CustomerVsCouponDAO {
     /**
      * a methode that delete all purchases of specific coupon from system
      *
-     * @param couponID
+     * @param couponID coupon's id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
@@ -50,7 +50,7 @@ public interface CustomerVsCouponDAO {
     /**
      * a methode that delete all purchases of specific customer from system
      *
-     * @param customerID
+     * @param customerID customer's id
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
      */
@@ -59,7 +59,7 @@ public interface CustomerVsCouponDAO {
     /**
      * a method shows all customer purchases
      *
-     * @param customerID
+     * @param customerID customer's id
      * @return list of all customer purchases
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
@@ -69,7 +69,7 @@ public interface CustomerVsCouponDAO {
     /**
      * a method shows all customer purchases from specific category
      *
-     * @param customerID
+     * @param customerID  customer's id
      * @param category   coupon category
      * @return list of purchases from specific category
      * @throws SQLException         when SQL throw SQLException
@@ -80,8 +80,8 @@ public interface CustomerVsCouponDAO {
     /**
      * a method shows all customer purchases till max price
      *
-     * @param customerID
-     * @param maxPrice
+     * @param customerID customer's id
+     * @param maxPrice the maximum price a coupon can have in order to be returned by this method.
      * @return list of purchases till the max price
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException

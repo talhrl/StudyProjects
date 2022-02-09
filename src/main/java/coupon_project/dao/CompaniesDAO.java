@@ -66,7 +66,7 @@ public interface CompaniesDAO {
     /**
      * Returning a specific company by its ID
      *
-     * @param companyId
+     * @param companyId             company's id
      * @return company data
      * @throws SQLException         when SQL throw SQLException
      * @throws InterruptedException when DataBaseUtils throw InterruptedException
